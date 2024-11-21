@@ -29,7 +29,7 @@
           <!-- Seleccionar Postulante -->
           <mat-form-field class="search-field" appearance="outline">
             <mat-label class="label">Seleccionar Postulante*</mat-label>
-            <mat-select formControlName="postulanteId" required>
+            <mat-select formControlName="postulanteId" style="color:white" required>
               <mat-option class="opciones" *ngFor="let postulante of postulantes" [value]="postulante.id">{{ postulante.nombreCompleto }}</mat-option>
             </mat-select>
             <mat-error *ngIf="documentoForm.get('postulanteId')?.invalid && (documentoForm.get('postulanteId')?.dirty || documentoForm.get('postulanteId')?.touched)">
