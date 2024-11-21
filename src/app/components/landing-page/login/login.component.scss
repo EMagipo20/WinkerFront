@@ -1979,3 +1979,17 @@ span {
     -o-transform: translateY(0);
   }
 }
+
+.navbar-container .nav-list .nav-item a {
+  color: #ffffff; /* Blanco por defecto */
+  transition: color 0.3s ease-in-out; /* Transición suave */
+  padding: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-container .nav-list .nav-item a:hover {
+  color: #006400; /* Verde intenso al pasar el mouse */
+  text-shadow: 0 0 8px #006400; /* Efecto de sombra más brillante */
+}
