@@ -31,12 +31,4 @@ export class FavoritaService {
   listarFavoritasPorPostulante(postulanteId: number): Observable<Favorita[]> {
     return this.http.get<Favorita[]>(`${this.baseUrl}/listarFavoritasPorPostulante/${postulanteId}`);
   }
-
-  setList(listaNueva: Favorita[]) {
-    this.listaCambio.next(listaNueva);
-  }
-
-  getList() {
-    return this.listaCambio.asObservable();
-  }
 }
