@@ -51,7 +51,7 @@
       </div> 
   
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="documentoForm.invalid || loading">
+        <button mat-raised-button color="primary" type="submit" style="color:white" [disabled]="documentoForm.invalid || loading">
           <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
           <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
           {{ isEditing ? 'Actualizar' : 'Guardar Documento' }}
