@@ -1,0 +1,56 @@
+<div class="table-container">
+    <h2>Solicitudes Aceptadas</h2>
+    <div class="search-container">
+      <mat-form-field class="search-field" appearance="outline">
+        <input 
+            matInput 
+            [(ngModel)]="searchTerm" 
+            (keyup)="buscarPostulantePorNombreOEmail(searchTerm)" 
+            placeholder="Buscar por nombre o correo" 
+        />
+        <button *ngIf="searchTerm" mat-icon-button matSuffix aria-label="Clear" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-icon-button matSuffix aria-label="Search">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <br>
+    <table mat-table [dataSource]="solicitudesAceptadas" class="mat-elevation-z8" *ngIf="solicitudesAceptadas.length > 0">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.id }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="fechaSolicitud">
+        <th mat-header-cell *matHeaderCellDef> Fecha de Solicitud </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.fechaSolicitud | date }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="tituloTrabajo">
+        <th mat-header-cell *matHeaderCellDef> Cargo </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.tituloTrabajo }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="nombreCompleto">
+        <th mat-header-cell *matHeaderCellDef> Nombre del Empleado </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.nombreCompleto }} </td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let solicitud">
+          <button mat-icon-button color="accent" (click)="verDetallesEmpleado(solicitud.postulanteId)">
+            <mat-icon>info</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <p class="post-nota" *ngIf="solicitudesAceptadas.length === 0">No hay solicitudes aceptadas para mostrar.</p>
+  </div>
+  

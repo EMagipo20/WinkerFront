@@ -1,0 +1,77 @@
+<!---Formulario de empresa-->>
+<div class="container">
+  <h2>Perfil de Empresa</h2>
+  <form [formGroup]="empresaForm" (ngSubmit)="onSubmitEmpresa()">
+    <div class="form-layout">
+      <div class="input-fields">
+        <!-- Nombre de la Empresa -->
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label class="label">Nombre de la Empresa</mat-label>
+          <input matInput formControlName="nombre" required>
+          <mat-error *ngIf="empresaForm.get('nombre')?.invalid && (empresaForm.get('nombre')?.dirty || empresaForm.get('nombre')?.touched)">
+            <span *ngIf="empresaForm.get('nombre')?.errors?.['required']">El nombre de la empresa es requerido.</span>
+            <span *ngIf="empresaForm.get('nombre')?.errors?.['pattern']">Este campo solo admite letras.</span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Rubro -->
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label class="label">Rubro</mat-label>
+          <mat-select class="lista" formControlName="rubroNombre" required>
+            <mat-option *ngFor="let rubro of rubros" [value]="rubro.nombreRubro">{{ rubro.nombreRubro }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="empresaForm.get('rubroNombre')?.invalid && (empresaForm.get('rubroNombre')?.dirty || empresaForm.get('rubroNombre')?.touched)">
+            <span *ngIf="empresaForm.get('rubroNombre')?.errors?.['required']">El rubro es requerido.</span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- RUC -->
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label class="label">RUC</mat-label>
+          <input matInput formControlName="ruc" required>
+          <mat-error *ngIf="empresaForm.get('ruc')?.invalid && (empresaForm.get('ruc')?.dirty || empresaForm.get('ruc')?.touched)">
+            <span *ngIf="empresaForm.get('ruc')?.errors?.['required']">El RUC es requerido.</span>
+            <span *ngIf="empresaForm.get('ruc')?.errors?.['pattern']">El RUC debe contener 11 dígitos.</span>
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Nombre de Usuario (Deshabilitado y con valor del username logueado) -->
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label class="label">Nombre de usuario</mat-label>
+          <input matInput formControlName="usuarioNombre">
+        </mat-form-field>
+
+        <!-- Teléfono -->
+        <mat-form-field class="search-field" appearance="outline">
+          <mat-label class="label">Teléfono</mat-label>
+          <input matInput formControlName="telefono" required>
+          <mat-error *ngIf="empresaForm.get('telefono')?.invalid && (empresaForm.get('telefono')?.dirty || empresaForm.get('telefono')?.touched)">
+            <span *ngIf="empresaForm.get('telefono')?.errors?.['required']">El teléfono es requerido.</span>
+            <span *ngIf="empresaForm.get('telefono')?.errors?.['pattern']">El teléfono debe contener 9 dígitos.</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="file-upload">
+        <div class="preview-container">
+          <!-- Cuadro para la previsualización de la imagen -->
+          <div class="preview-box" *ngIf="!fotoPreview"></div>
+          <img *ngIf="fotoPreview" [src]="fotoPreview" class="preview-img" alt="Vista previa de la foto">
+        </div>
+        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Logotipo</button>
+        <input type="file" #fileInput (change)="onFileChange($event, 'logotipoBase64')" hidden>
+      </div>
+    </div> 
+      
+    <div class="button-container">
+      <button mat-raised-button
+              [color]="isEditing ? 'accent' : 'primary'"
+              type="submit"
+              [disabled]="empresaForm.invalid || loading">
+        <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+        <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
+        {{ isEditing ? 'Actualizar' : 'Guardar datos' }}
+      </button>
+    </div>
+  </form>
+</div>

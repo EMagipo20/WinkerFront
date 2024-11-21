@@ -1,0 +1,60 @@
+<!-- Tabla para listar los ofertas -->
+<div class="table-container">
+    <h2>Mis documentos laborales</h2>
+    <div class="filters">
+        <div class="filter-container">
+          <mat-select [(value)]="anioSeleccionado" (selectionChange)="cargarDocumentosPorMesYAnio()" class="custom-mat-select" placeholder="Elegir año">
+            <mat-option *ngFor="let anio of [2021, 2022, 2023, 2024]" [value]="anio">{{ anio }}</mat-option>
+          </mat-select>
+        </div>
+      
+        <div class="filter-container">
+          <mat-select [(value)]="mesSeleccionado" (selectionChange)="cargarDocumentosPorMesYAnio()" class="custom-mat-select" placeholder="Elegir mes">
+            <mat-option *ngFor="let mes of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="mes">{{ mes }}</mat-option>
+          </mat-select>
+        </div>
+    </div>                
+    <div class="table-scroll">
+        <table mat-table [dataSource]="documentos" class="mat-elevation-z8">
+            <ng-container matColumnDef="id"> 
+                <th mat-header-cell *matHeaderCellDef> ID</th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td> 
+            </ng-container>
+        
+            <ng-container matColumnDef="postulanteNombre">
+                <th mat-header-cell *matHeaderCellDef> Nombres del postulante </th>
+                <td mat-cell *matCellDef="let element"> {{element.postulanteNombre}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef> Tipo de documento </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaCarga">
+                <th mat-header-cell *matHeaderCellDef> Fecha de carga</th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaCarga}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element" class="action-buttons">
+                  <button mat-icon-button (click)="verDocumento(element)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <a [routerLink]="['/sidenav-postulante/documents/insertupdatedocuments']" [state]="{ documento: element }" style="cursor: pointer;">
+                    <button mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                  </a>
+                  <button mat-icon-button color="warn" (click)="eliminarDocumento(element.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+            </ng-container>              
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

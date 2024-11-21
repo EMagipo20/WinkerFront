@@ -1,0 +1,133 @@
+.container {
+    border: 2px solid rgb(252, 252, 252);
+    border-radius: 8px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    margin: 20px auto;
+  }
+  
+  h2 {
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 500;
+    margin-bottom: 30px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+  }
+  
+  .form-layout {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .input-fields {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    justify-content: flex-start;
+    width: 50%;
+  }
+  
+  .mat-form-field {
+    margin-bottom: 10px;
+    width: 100%; 
+  }
+
+  .search-field {
+    width: 100%;
+    max-width: 550px;
+    height: 58px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.966);
+    color: #ffffff;
+  
+    mat-form-field {
+      width: 100%;
+      background-color: inherit;
+      border-radius: inherit;
+  
+      .mat-form-field-outline {
+        border-color: #ffffff;
+        border-radius: inherit;
+      }
+  
+      .mat-form-field-flex {
+        background-color: inherit;
+        color: #ccc;
+  
+        .mat-icon-button {
+          color: #aaa;
+          margin-right: 8px;
+  
+          &:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+  .label {
+    color: #fffffff1;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  search-field input::placeholder {
+    color: white;
+  }
+  
+  .search-field button {
+    color: white; 
+  }
+  
+  .search-field input:focus {
+    border-color: white;
+  }
+  
+  .search-field input {
+    color: rgb(255, 255, 255);
+  }
+  
+  .file-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 70px;
+    margin-top: 48px;
+    width: 26%; 
+  }
+  
+  .file-info-display {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .pdf-icon {
+    width: 30px; 
+    height: 30px; 
+    margin-right: 10px;
+  }
+  
+  .file-url-display {
+    font-size: 14px;
+    color: #333;
+    font-family: Roboto;
+  }
+  
+  .file-upload button {
+    width: 100%; 
+    margin-top: 10px;
+    align-self: center;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  

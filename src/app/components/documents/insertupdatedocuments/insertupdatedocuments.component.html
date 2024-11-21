@@ -1,0 +1,62 @@
+<!-- Formulario de Documento -->
+<div class="container">
+    <h2>Registrar Documento</h2>
+    <form [formGroup]="documentoForm" (ngSubmit)="registrarDocumento()">
+      <div class="form-layout">
+        <div class="input-fields">
+          <!-- Tipo de Documento -->
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Tipo de Documento</mat-label>
+            <mat-select formControlName="tipo" (selectionChange)="onTipoChange($event.value)" required>
+              <mat-option value="Certificado">Certificado</mat-option>
+              <mat-option value="Curriculum">Curriculum</mat-option>
+              <mat-option value="Diploma">Diploma</mat-option>
+              <mat-option value="Otro">Otro</mat-option>
+            </mat-select>
+            <mat-error *ngIf="documentoForm.get('tipo')?.invalid && (documentoForm.get('tipo')?.dirty || documentoForm.get('tipo')?.touched)">
+              <span *ngIf="documentoForm.get('tipo')?.errors?.['required']">El tipo de documento es requerido.</span>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="isOtroTipoVisible" class="search-field" appearance="outline">
+            <mat-label class="label">Especificar otro tipo de documento</mat-label>
+            <input matInput formControlName="tipoEspecificar">
+            <mat-error *ngIf="documentoForm.get('tipoEspecificar')?.invalid && (documentoForm.get('tipoEspecificar')?.dirty || documentoForm.get('tipoEspecificar')?.touched)">
+              <span *ngIf="documentoForm.get('tipoEspecificar')?.errors?.['required']">Este campo es requerido si eliges "Otro".</span>
+            </mat-error>
+          </mat-form-field>
+  
+          <!-- Seleccionar Postulante -->
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Seleccionar Postulante*</mat-label>
+            <mat-select formControlName="postulanteId" required>
+              <mat-option class="opciones" *ngFor="let postulante of postulantes" [value]="postulante.id">{{ postulante.nombreCompleto }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="documentoForm.get('postulanteId')?.invalid && (documentoForm.get('postulanteId')?.dirty || documentoForm.get('postulanteId')?.touched)">
+              <span *ngIf="documentoForm.get('postulanteId')?.errors?.['required']">El postulante es requerido.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+          <div class="file-upload">
+            <!-- Mostrar ícono de PDF y el nombre del archivo -->
+            <div *ngIf="documentoForm.get('archivoBase64')?.value" class="file-info-display">
+              <img src="assets/icono-pdf.png" alt="PDF Icon" class="pdf-icon">
+              <div class="file-url-display">{{ fileName }}</div> 
+            </div>
+
+            <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Archivo PDF</button>
+            <input type="file" #fileInput (change)="onFileChange($event, 'archivoBase64')" accept="application/pdf" hidden>
+          </div>
+      </div> 
+  
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="documentoForm.invalid || loading">
+          <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+          <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
+          {{ isEditing ? 'Actualizar' : 'Guardar Documento' }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

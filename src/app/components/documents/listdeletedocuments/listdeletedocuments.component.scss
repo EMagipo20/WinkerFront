@@ -1,0 +1,85 @@
+.table-container {
+    width: 50%; 
+    margin: 0 auto; 
+    position: relative;
+
+    h2 {
+      text-align: center;
+      font-family: Roboto;
+      font-weight: 500;
+      margin-bottom: 23px;
+      margin-top: 17px;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+    }
+
+    .action-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    table {
+        width: 450px; 
+        background-color: transparent;
+        border: 0.5px solid rgb(207, 207, 207);
+        border-collapse: collapse; 
+
+        th {
+            text-align: center; 
+        } 
+        
+        td {
+            text-align: center; 
+            color: white;
+        }
+
+        th {
+            background-color: rgb(255, 255, 255);
+        }
+    }
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .filter-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px; 
+    font-size: 14px;
+  }
+  
+  .custom-mat-select {
+    border-radius: 12px;
+    border: 1px solid #a0a0a0;
+    padding: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-mat-select.mat-focused {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #00796b; 
+  }
+  
+  .mat-option {
+    border-radius: 8px; 
+  }
+  
+  .mat-select-arrow {
+    color: #00796b;
+  }
+  

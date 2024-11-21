@@ -1,0 +1,99 @@
+.custom-toolbar {
+    background: rgba(0, 0, 0, 0.342);
+    color: white;
+    height: 75px;
+    position: relative;
+    width: 100%;
+    transition: top 0.3s ease;
+  }
+
+  .custom-toolbar.sticky {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.342);
+    color: white;
+  }
+  
+  .router-outlet {
+    transition: margin-top 0.3s ease;
+  }
+  
+  .router-outlet.sticky-content {
+    margin-top: 64px;
+  }
+  
+  .toolbar-title {
+    font-size: 17px;
+    text-align: center;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .username {
+    margin-right: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+  }
+
+  .notification-icon {
+    position: relative;
+    margin-right: 10px;
+    animation: none;
+
+    &.has-unread {
+      animation: pulse 1.5s infinite;
+
+      .unread-dot {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+      }
+    }
+  }
+  
+  mat-icon {
+    color: white;
+    font-size: 25px;
+  }
+  
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+  
+  .popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  

@@ -1,0 +1,220 @@
+.container {
+  display: flex;
+  border: 2.2px solid rgb(252, 252, 252);
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 66%;
+
+  .form-container {
+      flex: 7;
+      padding: 20px;
+      background-color: rgb(255, 255, 255);
+      border: 2px solid #ffffff;
+      border-radius: 8px;
+
+  }
+
+  .form-container, .table-container {
+    padding: 15px;
+    border-radius: 8px;
+
+    h2 {
+      text-align: center;
+      font-family: Roboto;
+      font-weight: 500;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: rgb(66, 66, 66);
+    }
+
+    h3 {
+      text-align: center;
+      font-family: Roboto;
+      font-weight: 500;
+      font-size: 16px;
+      color: rgb(255, 255, 255);
+    }
+
+    .form-field {
+      width: 100%; 
+      margin-bottom: 10px;
+      height: 80px; 
+
+      mat-label {
+        color: #000000; 
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+  }
+
+  .table-container {
+    flex-grow: 1;
+    max-width: 80%; 
+    margin-left: 20px;
+    position: relative;
+
+    table {
+      width: 580px; 
+      border-collapse: collapse;
+      background-color: transparent;
+      border: 0.5px solid rgb(207, 207, 207); 
+
+      th {
+        padding: 8px; 
+        text-align: center; 
+      } 
+      
+      td {
+        padding: 8px; 
+        text-align: center; 
+        color: white;
+      }
+
+      th {
+        background-color: #ffffff; 
+      }
+
+      .info-text {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  }
+}
+
+.search-container {
+display: flex;
+justify-content: center;
+margin: 2px 0;
+
+  .search-field {
+    width: 100%;
+    max-width: 550px;
+    height: 59px;
+    margin-top: 20px;
+    border: 1px solid white;
+
+    mat-form-field {
+      width: 100%;
+      background-color: inherit;
+      border-radius: inherit;
+
+      .mat-form-field-outline {
+        border-color: #ffffff;
+        border-radius: inherit;
+      }
+
+      .mat-form-field-flex {
+        background-color: inherit;
+        color: #ccc;
+
+        .mat-icon-button {
+          color: #aaa;
+          margin-right: 8px;
+
+          &:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-field input::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.search-field button {
+  color: white; 
+}
+
+.search-field input:focus {
+  border-color: white;
+}
+
+.search-field input {
+  color: rgb(253, 253, 253);
+}
+
+.heading-header {
+  text-align: right;
+  margin-right: 20px; 
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  @media (min-width: 768px) {
+    margin-right: 290px;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #dddcdc; 
+    margin: 5px 0 0;
+  }
+}
+
+.search {
+  width: 100%;
+  max-width: 550px;
+  height: 58px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.788);
+  color: #ffffff;
+
+  mat-form-field {
+    width: 100%;
+    background-color: inherit;
+    border-radius: inherit;
+
+    .mat-form-field-outline {
+      border-color: #ffffff;
+      border-radius: inherit;
+    }
+
+    .mat-form-field-flex {
+      background-color: inherit;
+      color: #ccc;
+
+      .mat-icon-button {
+        color: #aaa;
+        margin-right: 8px;
+
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.search-field input::placeholder {
+  color: rgba(255, 255, 255, 0.959);
+}
+
+.search-field button {
+  color: white; 
+}
+
+.search-field input:focus {
+  border-color: white;
+}
+
+.search input {
+  color: rgba(44, 44, 44, 0.801);
+}
+
+.label {
+  color: #585858e1;
+  margin-bottom: 5px;
+  font-size: 15px;
+  font-weight: 500;
+}

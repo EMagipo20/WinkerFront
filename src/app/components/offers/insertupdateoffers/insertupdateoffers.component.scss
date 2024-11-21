@@ -1,0 +1,105 @@
+.container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2.2px solid rgb(252, 252, 252);
+    width: 900px;
+    margin: 20px auto;
+  }
+
+  h2 {
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 17px;
+    color: rgb(255, 255, 255);
+  }
+
+  .checkbox-activo{
+    margin-top: 20px;
+  }
+
+  .button-container {
+    display: flex;
+    margin-top: 15px;
+    justify-content: center;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 5px;
+    height: 80px;
+  }
+
+  .label {
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .lista {
+    color: rgba(255, 255, 255, 0.863);
+
+  }
+
+  .search-field {
+    height: 58px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.541);
+    color: #ffffff;
+  
+    mat-form-field {
+      width: 100%;
+      background-color: inherit;
+      border-radius: inherit;
+  
+      .mat-form-field-outline {
+        border-color: #ffffff;
+        border-radius: inherit;
+      }
+  
+      .mat-form-field-flex {
+        background-color: inherit;
+        color: #ccc;
+  
+        .mat-icon-button {
+          color: #aaa;
+          margin-right: 8px;
+  
+          &:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+  
+  search-field input::placeholder {
+    color: white;
+  }
+  
+  .search-field button {
+    color: white; 
+  }
+  
+  .search-field input:focus {
+    border-color: white;
+  }
+  
+  .search-field input {
+    color: rgba(255, 255, 255, 0.801);
+  }
+
+  mat-datepicker-toggle {
+    color: white;
+  }
+
+  span {
+    color: #ffffff;
+  }
+
+  textarea {
+    color: #FF5733; /* Cambiar el color del texto dentro del textarea */
+  }
+  

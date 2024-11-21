@@ -1,0 +1,19 @@
+<div class="question-form-container">
+    <h2 class="form-title">Enviar una Pregunta</h2>
+  
+    <mat-form-field class="input-container full-width" appearance="outline">
+      <mat-label>Escribe tu pregunta aquí...</mat-label>
+      <textarea matInput [(ngModel)]="post.pregunta" required></textarea>
+    </mat-form-field>
+  
+    <div class="button-container">
+      <button mat-raised-button color="warn" class="btn-cancel" (click)="cancelar()">
+        <mat-icon>cancel</mat-icon> Cancelar
+      </button>
+      <button mat-raised-button color="primary" class="btn-send" (click)="enviarPost()" [disabled]="!post.pregunta">
+        <mat-icon>send</mat-icon> Enviar
+      </button>
+    </div>
+  </div>
+  
+  

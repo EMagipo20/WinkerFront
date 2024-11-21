@@ -1,0 +1,80 @@
+<div class="container">
+    <form [formGroup]="usuarioForm" (ngSubmit)="actualizarUsuario()">
+      <!-- Campo para el Username -->
+      <div class="form-field">
+        <label for="username">Username</label>
+        <input 
+          id="username" 
+          type="text" 
+          formControlName="username" 
+          placeholder="Ingrese su username" 
+          [readonly]="!isEditMode"
+        />
+        <!-- Mensajes de error para el Username -->
+        <div *ngIf="usuarioForm.get('username')?.invalid && (usuarioForm.get('username')?.dirty || usuarioForm.get('username')?.touched)" class="error-message">
+          <div *ngIf="usuarioForm.get('username')?.hasError('required')">El campo Username es obligatorio.</div>
+          <div *ngIf="usuarioForm.get('username')?.hasError('pattern')">El Username debe comenzar con una mayúscula y contener un carácter especial.</div>
+        </div>
+      </div>
+  
+      <!-- Campo para la Nueva Contraseña -->
+      <div class="form-field">
+        <label for="password">Nueva contraseña</label>
+        <div class="input-container">
+            <input 
+              id="password" 
+              [type]="passwordVisible['password'] ? 'text' : 'password'" 
+              formControlName="password" 
+              placeholder="Ingrese su nueva contraseña"
+            />
+            <mat-icon matSuffix (click)="togglePasswordVisibility('password')">visibility</mat-icon>
+        </div>
+        <!-- Mensajes de error para la contraseña -->
+        <div *ngIf="usuarioForm.get('password')?.invalid && (usuarioForm.get('password')?.dirty || usuarioForm.get('password')?.touched)" class="error-message">
+          <div *ngIf="usuarioForm.get('password')?.hasError('required')">El campo Contraseña es obligatorio.</div>
+          <div *ngIf="usuarioForm.get('password')?.hasError('pattern')">La contraseña debe estar en minúsculas y contener al menos un número.</div>
+          <div *ngIf="usuarioForm.get('password')?.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
+      </div>
+  
+      <!-- Campo para Repetir Contraseña -->
+      <div class="form-field">
+        <label for="confirmPassword">Repetir Contraseña</label>
+        <div class="input-container">
+            <input 
+              id="confirmPassword" 
+              [type]="passwordVisible['confirmPassword'] ? 'text' : 'password'" 
+              formControlName="confirmPassword" 
+              placeholder="Repita su contraseña"
+            />
+            <mat-icon matSuffix (click)="togglePasswordVisibility('confirmPassword')">visibility</mat-icon>
+        </div>
+        <!-- Mensajes de error para la confirmación de contraseña -->
+        <div *ngIf="usuarioForm.get('confirmPassword')?.invalid && (usuarioForm.get('confirmPassword')?.dirty || usuarioForm.get('confirmPassword')?.touched)" class="error-message">
+          <div *ngIf="usuarioForm.get('confirmPassword')?.hasError('required')">El campo Repetir Contraseña es obligatorio.</div>
+          <div *ngIf="usuarioForm.hasError('passwordMismatch')">Las contraseñas no coinciden.</div>
+        </div>
+      </div>
+  
+      <!-- Campo para el estado habilitado -->
+      <mat-checkbox formControlName="enabled" color="primary">
+         <span>Habilitado</span>
+      </mat-checkbox>
+  
+      <!-- Botón para guardar los cambios -->
+      <div class="button-container">
+        <button mat-raised-button 
+                [color]="loading ? 'accent' : 'primary'" 
+                type="submit" 
+                [disabled]="usuarioForm.invalid || loading">
+          <mat-icon *ngIf="!loading">{{ loading ? 'sync' : 'edit' }}</mat-icon>
+          <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
+          {{ loading ? 'Actualizando...' : 'Actualizar datos' }}
+        </button>
+      </div>
+    </form>
+  
+    <!-- Mensaje de carga o error -->
+    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+</div>
+  

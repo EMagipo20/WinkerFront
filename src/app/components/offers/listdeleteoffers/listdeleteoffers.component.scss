@@ -1,0 +1,138 @@
+.table-container {
+    width: 80%; 
+    margin: 0 auto; 
+    position: relative;
+
+    h2 {
+      text-align: center;
+      font-family: Roboto, sans-serif;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+        margin-top: 10px;
+    }
+
+    table {
+        width: 1400px; 
+        border-collapse: collapse; 
+        background-color: transparent;
+        border: 0.5px solid rgb(207, 207, 207); 
+      
+        th, td {
+          padding: 8px;
+          text-align: left;
+        }
+      
+        th {
+          background-color: #ffffff;
+          font-weight: bold;
+          font-size: 0.9rem;
+          text-align: center; 
+        }
+      
+        td {
+          font-size: 0.9rem;
+          color: #ffffff;
+          text-align: center; 
+          border-bottom: 1px solid #e0e0e0;
+        }
+    }
+
+    .active-icon {
+        color: #47bd57;
+      }
+      
+      .inactive-icon {
+        color: #f44336;
+    }
+   
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  
+    .search-2 {
+      width: 100%;
+      max-width: 600px;
+  
+      mat-form-field {
+        width: 100%;
+        background-color: #1a1a1a;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+  
+        input {
+          padding: 10px 20px;
+          font-size: 16px;
+          color: #ccc; // Color del texto
+          background: transparent;
+        }
+  
+        .mat-form-field-wrapper {
+          padding: 0 16px;
+          border-radius: 25px;
+          box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.1);
+        }
+  
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+          border: none;
+        }
+  
+        .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+          border: none;
+        }
+  
+        .mat-form-field-subscript-wrapper {
+          display: none;
+        }
+  
+        .mat-input-element::placeholder {
+          color: #666;
+          opacity: 1;
+        }
+      }
+      .mat-icon {
+        color: #666;
+        margin-right: 10px;
+      }
+    }
+  }
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+  
+    .filter-text {
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .conteo {
+      font-size: 16px;
+    }
+  
+    mat-slide-toggle {
+      display: flex;
+      align-items: center;
+  
+      .filter-text {
+        margin-left: 8px;
+      }
+    }
+  
+    .conteo {
+      padding: 8px 16px;
+    }
+  }
+  

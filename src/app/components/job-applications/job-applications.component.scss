@@ -1,0 +1,43 @@
+.table-container {
+    width: 65%;
+    margin: 0 auto;
+    position: relative;
+  
+    h2 {
+      text-align: center;
+      font-family: Roboto, sans-serif;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: rgb(80, 6, 88);
+    }
+  
+  }
+  
+  // Tabla de Angular Material
+  table {
+    width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+  
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-align: center; 
+    }
+  
+    td {
+      font-size: 0.9rem;
+      color: #4a4a4a;
+      text-align: center; 
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+  

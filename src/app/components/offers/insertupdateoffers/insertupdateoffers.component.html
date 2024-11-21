@@ -1,0 +1,111 @@
+<!-- Formulario de Oferta de Empleo -->
+<div class="container">
+  <h2>Registrar Oferta de Empleo</h2>
+  <form [formGroup]="ofertaForm" (ngSubmit)="registrarOferta()">
+    
+    <!-- Campo: Título del Trabajo -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Título del Trabajo</mat-label>
+      <input matInput formControlName="tituloTrabajo" required>
+      <mat-error *ngIf="ofertaForm.get('tituloTrabajo')?.invalid && (ofertaForm.get('tituloTrabajo')?.dirty || ofertaForm.get('tituloTrabajo')?.touched)">
+        <span *ngIf="ofertaForm.get('tituloTrabajo')?.errors?.['required']">El título del trabajo es requerido.</span>
+        <span *ngIf="ofertaForm.get('tituloTrabajo')?.errors?.['pattern']">Este campo solo admite letras.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Descripción -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Descripción</mat-label>
+      <input matInput formControlName="descripcion" required>
+      <mat-error *ngIf="ofertaForm.get('descripcion')?.invalid && (ofertaForm.get('descripcion')?.dirty || ofertaForm.get('descripcion')?.touched)">
+        <span *ngIf="ofertaForm.get('descripcion')?.errors?.['required']">La descripción es requerida.</span>
+        <span *ngIf="ofertaForm.get('descripcion')?.errors?.['pattern']">Este campo solo admite letras, comas y puntos.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Tipo de Trabajo -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Tipo de trabajo</mat-label>
+      <mat-select class="lista" formControlName="tipoTrabajoId" required>
+        <mat-option *ngFor="let tipoTrabajo of tiposTrabajos" [value]="tipoTrabajo.id">{{ tipoTrabajo.tipo }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="ofertaForm.get('tipoTrabajoId')?.invalid && (ofertaForm.get('tipoTrabajoId')?.dirty || ofertaForm.get('tipoTrabajoId')?.touched)">
+        <span *ngIf="ofertaForm.get('tipoTrabajoId')?.errors?.['required']">El tipo de trabajo es requerido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Salario -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Salario</mat-label>
+      <input matInput type="number" formControlName="salario" required>
+      <mat-error *ngIf="ofertaForm.get('salario')?.invalid && (ofertaForm.get('salario')?.dirty || ofertaForm.get('salario')?.touched)">
+        <span *ngIf="ofertaForm.get('salario')?.errors?.['required']">El salario es requerido.</span>
+        <span *ngIf="ofertaForm.get('salario')?.errors?.['min']">El salario debe ser un valor positivo.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Fecha de Publicacion -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Fecha de Publicación</mat-label>
+      <input matInput formControlName="fechaPublicacion" readonly>
+    </mat-form-field>
+
+    <!-- Campo: Fecha de Vencimiento -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Fecha de Vencimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fechaVencimiento" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="ofertaForm.get('fechaVencimiento')?.invalid && (ofertaForm.get('fechaVencimiento')?.dirty || ofertaForm.get('fechaVencimiento')?.touched)">
+        <span *ngIf="ofertaForm.get('fechaVencimiento')?.errors?.['required']">La fecha de vencimiento es requerida.</span>
+        <span *ngIf="ofertaForm.get('fechaVencimiento')?.errors?.['fechaInvalida']">La fecha de vencimiento no puede ser anterior a la fecha de publicación.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Activo -->
+    <br><br>
+    <label class="checkbox-activo">
+      <input type="checkbox" formControlName="indActivo">
+       <span> Activo </span>
+    </label>
+    <br><br>
+
+    <!-- Campo: Empresa Asociada -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Empresa asociada</mat-label>
+      <mat-select class="lista" formControlName="empresaId" required>
+        <mat-option *ngFor="let empresa of empresas" [value]="empresa.id">
+          {{ empresa.nombre }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="ofertaForm.get('empresaId')?.invalid && (ofertaForm.get('empresaId')?.dirty || ofertaForm.get('empresaId')?.touched)">
+        <span *ngIf="ofertaForm.get('empresaId')?.errors?.['required']">La empresa asociada es requerida.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo: Ubicación Asociada -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label class="label">Ubicación asociada</mat-label>
+      <mat-select class="lista" formControlName="ubicacionOfertaId" required>
+        <mat-option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.id">
+          {{ ubicacion.departamento }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="ofertaForm.get('ubicacionOfertaId')?.invalid && (ofertaForm.get('ubicacionOfertaId')?.dirty || ofertaForm.get('ubicacionOfertaId')?.touched)">
+        <span *ngIf="ofertaForm.get('ubicacionOfertaId')?.errors?.['required']">La ubicación es requerida.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Botón: Guardar Datos -->
+    <div class="button-container">
+      <button mat-raised-button 
+              [color]="isEditing ? 'accent' : 'primary'" 
+              type="submit" 
+              [disabled]="ofertaForm.invalid || loading">
+        <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+        <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
+        {{ isEditing ? 'Actualizar' : 'Guardar' }}
+      </button>
+    </div>    
+  </form>
+</div>

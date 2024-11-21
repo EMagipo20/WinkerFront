@@ -1,0 +1,31 @@
+<div class="profile-container">
+    <div class="photo-container">
+      <img *ngIf="postulante.fotoBase64" [src]="'data:image/png;base64,' + postulante.fotoBase64" alt="Foto del Postulante" class="profile-photo">
+    </div>
+  
+    <h2 class="profile-name">{{ postulante.nombreCompleto }}</h2>
+    <p class="profile-email">{{ postulante.correo }}</p>
+  
+    <div class="profile-details">
+      <p>
+        <mat-icon color="primary">phone</mat-icon>
+        <strong>Teléfono:</strong> {{ postulante.telefono }}
+      </p>
+      <p>
+        <mat-icon color="primary">cake</mat-icon>
+        <strong>Fecha de Nacimiento:</strong> {{ postulante.fechaNacimiento | date }}
+      </p>
+      <p>
+        <mat-icon color="primary">location_on</mat-icon>
+        <strong>Dirección:</strong> {{ postulante.direccion }}
+      </p>
+    </div>
+  </div>
+  
+  <!-- Contenedor de botones -->
+  <div class="button-container">
+    <button mat-raised-button color="warn" (click)="cerrarDialogo()">
+      <mat-icon>close</mat-icon> Cerrar
+    </button>
+  </div>
+  

@@ -1,0 +1,84 @@
+<!-- Tabla para listar las ofertas -->
+<div class="table-container">
+    <h2>Lista de ofertas laborales</h2>
+    <div class="actions">
+        <mat-slide-toggle (change)="toggleSoloActivas($event)">
+            <span class="filter-text">Mejores salarios</span>
+        </mat-slide-toggle>
+        <button class="conteo" mat-raised-button color="accent" (click)="contarOfertasPorEmpresa()">Contar ofertas</button>
+    </div>
+    <div class="table-scroll">
+        <table mat-table [dataSource]="ofertas" class="mat-elevation-z8">
+            <ng-container matColumnDef="id"> 
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td> 
+            </ng-container>
+        
+            <ng-container matColumnDef="tituloTrabajo">
+                <th mat-header-cell *matHeaderCellDef> Titulo </th>
+                <td mat-cell *matCellDef="let element"> {{element.tituloTrabajo}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="salario">
+                <th mat-header-cell *matHeaderCellDef> Salario </th>
+                <td mat-cell *matCellDef="let element"> {{element.salario}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fechaPublicacion">
+                <th mat-header-cell *matHeaderCellDef> Fecha publicación </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaPublicacion | date}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fechaVencimiento">
+                <th mat-header-cell *matHeaderCellDef> Fecha vencimiento </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaVencimiento | date}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="indActivo">
+                <th mat-header-cell *matHeaderCellDef> ¿Activa? </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-icon [ngClass]="{'active-icon': element.indActivo, 'inactive-icon': !element.indActivo}">
+                    {{element.indActivo ? 'check_circle' : 'cancel'}}
+                  </mat-icon>
+                </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="empresa">
+                <th mat-header-cell *matHeaderCellDef> Nombre empresa </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreEmpresa}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="tipoTrabajo">
+                <th mat-header-cell *matHeaderCellDef> Tipo trabajo </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreTipoTrabajo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ubicacion">
+                <th mat-header-cell *matHeaderCellDef> Ubicación </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreUbi}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['/sidenav-empresa/offers/insertupdateoffers']" [state]="{ oferta: element }" style="cursor: pointer;">
+                    <button mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </a>
+                <button mat-icon-button color="warn" (click)="eliminarOferta(element.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<!-- Contenedor de la tabla de solicitudes -->
+<div class="table-container">
+    <h2>Lista de Solicitudes Recibidas</h2>
+    <div class="search-container">
+      <mat-form-field class="search-field" appearance="outline">
+        <input 
+            matInput 
+            [(ngModel)]="searchTerm" 
+            (keyup)="buscarPostulantePorNombreOEmail(searchTerm)" 
+            placeholder="Buscar por nombre o correo" 
+        />
+        <button *ngIf="searchTerm" mat-icon-button matSuffix aria-label="Clear" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-icon-button matSuffix aria-label="Search">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+</div>
+ <br>
+    <table mat-table [dataSource]="solicitudes" class="mat-elevation-z8" *ngIf="solicitudes.length > 0">
+      
+      <!-- ID de la Solicitud -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID Solicitud </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.id }} </td>
+      </ng-container>
+  
+      <!-- Fecha de Solicitud -->
+      <ng-container matColumnDef="fechaSolicitud">
+        <th mat-header-cell *matHeaderCellDef> Fecha de Solicitud </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.fechaSolicitud | date }} </td>
+      </ng-container>
+  
+      <!-- Estado de Solicitud -->
+      <ng-container matColumnDef="estadoSolicitud">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.estadoSolicitud }} </td>
+      </ng-container>
+  
+      <!-- Título del Trabajo -->
+      <ng-container matColumnDef="tituloTrabajo">
+        <th mat-header-cell *matHeaderCellDef> Título del Trabajo </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.tituloTrabajo }} </td>
+      </ng-container>
+  
+      <!-- Nombre Completo del Postulante -->
+      <ng-container matColumnDef="nombreCompleto">
+        <th mat-header-cell *matHeaderCellDef> Postulante </th>
+        <td mat-cell *matCellDef="let solicitud"> {{ solicitud.nombreCompleto }} </td>
+      </ng-container>
+  
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let solicitud">
+          <button mat-icon-button color="primary" (click)="aceptarSolicitud(solicitud)">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="rechazarSolicitud(solicitud)">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="verDetallesPostulante(solicitud.postulanteId)">
+            <mat-icon>info</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <!-- Header y Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <p class="post-nota" *ngIf="solicitudes.length === 0">No hay solicitudes recibidas para esta empresa.</p>
+  </div>
+  

@@ -1,0 +1,51 @@
+<div class="container">
+    <h2>Mis Solicitudes de Empleo</h2>
+
+    <p class="contar-solicitudes">Total de solicitudes enviadas: {{ solicitudCount }}</p>
+
+    <p class="post-nota" *ngIf="solicitudes.length === 0">
+        Aún no has enviado solicitudes de empleo.
+    </p>
+    
+    <!-- Loading indicator -->
+    <div *ngIf="loading">Cargando solicitudes...</div>
+  
+    <!-- Cards container for displaying job applications -->
+    <div class="card-container" *ngIf="!loading">
+      <div class="card" *ngFor="let solicitud of solicitudes">
+        
+        <!-- Job title -->
+        <h3>{{ solicitud.tituloTrabajo }}</h3>
+        
+        <!-- Attributes of the application -->
+        <ul class="solicitud-atributos">
+          
+          <!-- Applicant's name -->
+          <li>
+            <span class="icon material-icons">person</span> <!-- Icon for applicant -->
+            <strong>Postulante:</strong>&nbsp;{{ solicitud.nombreCompleto }}
+          </li>
+          
+          <!-- Application date -->
+          <li>
+            <span class="icon material-icons">event</span> <!-- Icon for application date -->
+            <strong>Fecha de Solicitud:</strong>&nbsp;{{ solicitud.fechaSolicitud | date:'shortDate' }}
+          </li>
+          
+          <!-- Application status -->
+          <li>
+            <span class="icon material-icons">info</span> <!-- Icon for status -->
+            <strong>Estado:</strong>&nbsp;{{ solicitud.estadoSolicitud }}
+          </li>
+        </ul>
+  
+        <!-- Action buttons for each application -->
+        <div class="action-buttons">
+            <button mat-icon-button color="warn" (click)="eliminarSolicitud(solicitud.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,124 @@
+.table-container {
+    width: 75%; 
+    margin: 0 auto; 
+    position: relative;
+
+    h2 {
+      text-align: center;
+      font-family: Roboto;
+      font-weight: 500;
+      margin-bottom: 23px;
+      margin-top: 17px;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+    }
+
+    .table-scroll {
+        overflow-x: auto;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    table {
+        width: 1400px; 
+        border-collapse: collapse;
+        border: 0.5px solid rgb(207, 207, 207); 
+        background-color: transparent;
+
+        th {
+            padding: 8px;
+            text-align: center;
+        }
+        
+        td {
+            padding: 6px; 
+            text-align: center; 
+            color: white;
+        }
+
+        th {
+            background-color: rgb(255, 255, 255);
+        }
+    }
+
+    .active-icon {
+        color: #47bd57;
+      }
+      
+      .inactive-icon {
+        color: #f44336;
+    }
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0;
+
+    .search-field {
+      width: 100%;
+      max-width: 550px;
+      height: 58px;
+      border: 1px solid white;
+      color: #ffffff;
+
+      mat-form-field {
+        width: 100%;
+        background-color: inherit;
+        border-radius: inherit;
+  
+        .mat-form-field-outline {
+          border-color: #ffffff;
+          border-radius: inherit;
+        }
+  
+        .mat-form-field-flex {
+          background-color: inherit;
+          color: #ccc;
+  
+          .mat-icon-button {
+            color: #aaa;
+            margin-right: 8px;
+  
+            &:hover {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+
+.filter-toggle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.search-field input::placeholder {
+  color: white;
+}
+
+.search-field button {
+  color: white; 
+}
+
+.search-field input:focus {
+  border-color: white;
+}
+
+.search-field input {
+  color: white;
+}

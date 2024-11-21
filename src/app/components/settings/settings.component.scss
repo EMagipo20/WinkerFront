@@ -1,0 +1,88 @@
+.container {
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 30px;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    background-color: transparent;
+  }
+  
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  
+    label {
+      font-size: 15px;
+      margin-bottom: 12px;
+      font-family: Roboto;
+      color: #ffffff;
+    }
+  
+    .input-container {
+      position: relative;
+    }
+  
+    input {
+      padding: 15px;
+      font-size: 15px;
+      border: 1px solid #ebebeb;
+      border-radius: 4px;
+      font-family: Roboto;
+      width: 100%;
+      outline: none;
+      color: #fffffff6;
+      background-color: transparent;
+      transition: border-color 0.3s ease;
+  
+      &:focus {
+        border-color: #3f51b5;
+      }
+  
+      &.error {
+        border-color: #f44336;
+      }
+    }
+  
+    mat-icon {
+      position: absolute;
+      right: 10px; 
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ffffff;
+    }
+  
+    .checkbox {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      color: #ffffff;
+  
+      input {
+        margin-right: 8px;
+      }
+  
+      label {
+        font-size: 14px;
+        color: #ffffff;
+      }
+    }
+  
+    .error-message {
+      font-size: 12px;
+      color: #f44336;
+      margin-top: 5px;
+    }
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  span {
+    color: #ffffff;
+  }

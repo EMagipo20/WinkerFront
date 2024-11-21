@@ -1,0 +1,83 @@
+<!--Formulario de Postulante-->
+<div class="container">
+    <h2>Perfil de Postulante</h2>
+    <form [formGroup]="postulanteForm" (ngSubmit)="onSubmitPostulante()">
+      <div class="form-layout">
+        <div class="input-fields">
+          <!-- Todos los campos de entrada aquí -->
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Nombre Completo</mat-label>
+            <input matInput formControlName="nombreCompleto" required>
+            <mat-error *ngIf="postulanteForm.get('nombreCompleto')?.invalid && (postulanteForm.get('nombreCompleto')?.dirty || postulanteForm.get('nombreCompleto')?.touched)">
+              <span *ngIf="postulanteForm.get('nombreCompleto')?.errors?.['required']">El nombre completo es requerido.</span>
+              <span *ngIf="postulanteForm.get('nombreCompleto')?.errors?.['pattern']">Este campo solo admite letras</span>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Nombre de Usuario -->
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Nombre de usuario</mat-label>
+            <input matInput formControlName="usuarioNombre">
+          </mat-form-field>
+          
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Correo Electrónico</mat-label>
+            <input matInput formControlName="correo" required email>
+            <mat-error *ngIf="postulanteForm.get('correo')?.invalid && (postulanteForm.get('correo')?.dirty || postulanteForm.get('correo')?.touched)">
+              <span *ngIf="postulanteForm.get('correo')?.errors?.['required']">El correo electrónico es requerido.</span>
+              <span *ngIf="postulanteForm.get('correo')?.errors?.['email']">Por favor ingrese un correo válido</span>
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Teléfono</mat-label>
+            <input matInput formControlName="telefono" required>
+            <mat-error *ngIf="postulanteForm.get('telefono')?.invalid && (postulanteForm.get('telefono')?.dirty || postulanteForm.get('telefono')?.touched)">
+              <span *ngIf="postulanteForm.get('telefono')?.errors?.['required']">El teléfono es requerido.</span>
+              <span *ngIf="postulanteForm.get('telefono')?.errors?.['pattern']">El teléfono debe ser un número de 9 dígitos.</span>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="postulanteForm.get('fechaNacimiento')?.invalid && (postulanteForm.get('fechaNacimiento')?.dirty || postulanteForm.get('fechaNacimiento')?.touched)">
+              <span *ngIf="postulanteForm.get('fechaNacimiento')?.errors?.['required']">La fecha de nacimiento es requerida.</span>
+              <span *ngIf="postulanteForm.get('fechaNacimiento')?.errors?.['invalidBirthdate']">La fecha debe ser en el pasado.</span>
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="search-field" appearance="outline">
+            <mat-label class="label">Dirección</mat-label>
+            <input matInput formControlName="direccion" required>
+            <mat-error *ngIf="postulanteForm.get('direccion')?.invalid && (postulanteForm.get('direccion')?.dirty || postulanteForm.get('direccion')?.touched)">
+              <span *ngIf="postulanteForm.get('direccion')?.errors?.['required']">La dirección es requerida.</span>
+              <span *ngIf="postulanteForm.get('direccion')?.errors?.['pattern']">Este campo solo admite letras, comas y puntos.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="file-upload">
+          <div class="preview-container">
+            <div class="preview-box" *ngIf="!fotoPreview"></div>
+            <img *ngIf="fotoPreview" [src]="fotoPreview" class="preview-img" alt="Vista previa de la foto">
+          </div>
+          <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Foto</button>
+          <input type="file" #fileInput (change)="onFileChange($event, 'fotoBase64')" hidden>
+        </div>     
+      </div>
+
+      <div class="button-container">
+        <button mat-raised-button
+              [color]="isEditing ? 'accent' : 'primary'"
+              type="submit"
+              [disabled]="postulanteForm.invalid || loading">
+        <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+        <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
+        {{ isEditing ? 'Actualizar' : 'Guardar datos' }}
+      </button>
+      </div>
+    </form>
+</div>

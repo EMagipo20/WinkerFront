@@ -1,0 +1,93 @@
+// Contenedor principal del perfil ajustable al contenido
+.profile-container {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  // Foto del postulante
+  .photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  // Nombre y correo del perfil
+  .profile-name {
+    font-size: 1.4rem;
+    font-family: Roboto;
+    font-weight: 500;
+    color: #333333;
+    margin: 10px 0 5px;
+  }
+  
+  .profile-email {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-bottom: 20px;
+  }
+  
+  // Detalles del perfil
+  .profile-details {
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 0.90rem;
+      color: #4a4a4a;
+      margin-bottom: 12px;
+  
+      mat-icon {
+        color: #4caf50;
+        margin-right: 8px;
+      }
+  
+      strong {
+        font-weight: 600;
+        color: #333333;
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  // Contenedor de botones
+  .button-container {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+  
+    button {
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+  
+      mat-icon {
+        font-size: 1.2rem;
+      }
+    }
+  
+    button[color="warn"] {
+      background-color: #f44336;
+      color: #ffffff;
+  
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+  }
+  

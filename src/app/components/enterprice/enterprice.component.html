@@ -1,0 +1,48 @@
+<div class="search-container">
+  <mat-form-field class="search-field" appearance="outline">
+    <input
+      matInput
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="buscarEmpresa(searchTerm)"
+      placeholder="Ingrese RUC o nombre"
+    />
+    <button *ngIf="searchTerm" mat-icon-button matSuffix aria-label="Clear" (click)="clearSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
+    <button mat-icon-button matSuffix aria-label="Search" (click)="buscarEmpresa(searchTerm)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="container">
+  <div *ngIf="loading">Cargando empresas...</div>
+
+  <div class="card-container" *ngIf="!loading">
+    <div class="card" *ngFor="let empresa of empresas">
+      <div class="logo-container">
+        <img *ngIf="empresa.logotipoBase64" [src]="previewImage(empresa.logotipoBase64)" alt="Logotipo de {{ empresa.nombre }}" class="logo">
+      </div>
+      <h3>{{ empresa.nombre }}</h3>
+
+      <ul class="empresa-atributos">
+        <li>
+          <span class="icon material-icons">badge</span> <!-- Icono de RUC -->
+          <strong>RUC: </strong> &nbsp; {{ empresa.ruc }}
+        </li>
+        <li>
+          <span class="icon material-icons">phone</span> <!-- Icono de Teléfono -->
+          <strong>Teléfono:</strong> &nbsp; {{ empresa.telefono }}
+        </li>
+        <li>
+          <span class="icon material-icons">person</span> <!-- Icono de Usuario -->
+          <strong>Usuario: </strong> &nbsp; {{ empresa.username }}
+        </li>
+        <li>
+          <span class="icon material-icons">business</span> <!-- Icono de Rubro -->
+          <strong>Rubro: </strong> &nbsp; {{ empresa.nombreRubro }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+mat-card {
+    max-width: 600px;
+    margin: 20px auto;
+    overflow: hidden;
+  
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      background-color: #f5f5f5;
+      padding: 2px;
+      border-radius: 50%;
+    }
+  
+    .logo {
+      max-width: 80px;
+      max-height: 80px;
+      border-radius: 50%;
+    }
+  
+    mat-card-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #ffffff;
+  
+      mat-card-title {
+        font-size: 1.4rem;
+        font-weight: 500;
+        font-family: Roboto;
+        text-align: center;
+        margin: 0;
+        color: #303030e3;
+      }
+  
+      mat-card-subtitle {
+        font-size: 0.85rem;
+        text-align: center;
+        color: #303030b0;
+        margin-top: 5px;
+      }
+    }
+  
+    mat-card-content {
+      padding: 20px;
+      p {
+        display: flex;
+        align-items: center;
+        font-size: 0.90rem;
+        color: #4a4a4a;
+        margin-bottom: 12px;
+  
+        mat-icon {
+          color: #4caf50;
+          margin-right: 12px;
+        }
+  
+        strong {
+          font-weight: 600;
+          color: #333333;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 3px;
+    margin-top: 5px;
+    border-radius: 0 0 12px 12px;
+    max-width: 800px;
+    margin: 5px auto;
+  
+    button {
+      width: auto;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.3s ease;
+  
+      mat-icon {
+        font-size: 1.2rem;
+      }
+    }
+  
+    button[color="warn"] {
+      background-color: #f44336;
+      color: #ffffff;
+  
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+  
+    button[color="primary"] {
+      background-color: #3f51b5;
+      color: #ffffff;
+  
+      &:hover {
+        background-color: #303f9f;
+      }
+    }
+  }
+  

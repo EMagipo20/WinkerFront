@@ -1,0 +1,25 @@
+<h2>Posts Recibidos</h2>
+<div *ngIf="loading">Cargando posts...</div>
+
+<div class="post-nota" *ngIf="!loading && postsRecibidos.length === 0">
+  No hay posts pendientes de respuesta.
+</div>
+
+<div class="container">
+  <div class="card-container">
+    <div *ngFor="let post of postsRecibidos" class="card">
+      <h3>Pregunta:</h3>
+      <p>{{ post.pregunta }}</p>
+      <mat-form-field class="full-width">
+        <mat-label class="titulo-imput">Responder</mat-label>
+        <textarea [ngStyle]="{'font-size': '13px'}" matInput [(ngModel)]="post.respuesta"></textarea>
+      </mat-form-field>
+      <div class="card-footer">
+        <button mat-raised-button color="primary" class="enviarpost" (click)="responderPost(post)">
+          <mat-icon>send</mat-icon> Enviar Respuesta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

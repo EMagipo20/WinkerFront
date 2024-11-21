@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <div class="logo-container">
+      <img *ngIf="data.logotipoEmpresa" [src]="'data:image/png;base64,' + data.logotipoEmpresa" alt="Logotipo de {{ data.nombreEmpresa }}" class="logo">
+    </div>
+    <mat-card-title>{{ data.tituloTrabajo }}</mat-card-title>
+    <mat-card-subtitle>{{ data.nombreEmpresa }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      <mat-icon color="primary">description</mat-icon>
+      <strong>Descripción:&nbsp;</strong> {{ data.descripcion }}
+    </p>
+    <p>
+      <mat-icon color="primary">attach_money</mat-icon>
+      <strong>Salario:&nbsp;</strong> {{ data.salario | currency }}
+    </p>
+    <p>
+      <mat-icon color="primary">location_on</mat-icon>
+      <strong>Ubicación:&nbsp;</strong> {{ data.nombreUbicacion }}
+    </p>
+    <p>
+      <mat-icon color="primary">work_outline</mat-icon>
+      <strong>Tipo de Trabajo:&nbsp;</strong> {{ data.nombreTipoTrabajo }}
+    </p>
+    <p>
+      <mat-icon color="primary">calendar_today</mat-icon>
+      <strong>Fecha de Publicación:&nbsp;</strong> {{ data.fechaPublicacion | date }}
+    </p>
+    <p>
+      <mat-icon color="primary">event</mat-icon>
+      <strong>Fecha de Vencimiento:&nbsp;</strong> {{ data.fechaVencimiento | date }}
+    </p>
+  </mat-card-content>  
+  <div class="button-container">
+    <button mat-raised-button color="warn" (click)="cancelar()">
+      <mat-icon>cancel</mat-icon> Cancelar
+    </button>
+    <button mat-raised-button color="primary" (click)="enviarSolicitud()">
+      <mat-icon>send</mat-icon> Enviar Solicitud
+    </button>
+  </div>
+</mat-card>

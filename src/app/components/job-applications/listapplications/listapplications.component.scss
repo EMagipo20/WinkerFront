@@ -1,0 +1,105 @@
+.table-container {
+    width: 65%;
+    margin: 0 auto;
+    position: relative;
+  
+    h2 {
+      text-align: center;
+      font-family: Roboto, sans-serif;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+    }
+  }
+  
+  // Tabla de Angular Material
+  table {
+    width: 750px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: transparent;
+    border: 0.5px solid rgb(207, 207, 207); 
+  
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-align: center; 
+    }
+  
+    td {
+      font-size: 0.9rem;
+      color: #ffffff;
+      text-align: center; 
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+  
+  .post-nota {
+    text-align: center;
+    margin-top: 30px;
+    color: rgb(221, 9, 9);
+    font-family: Roboto;
+  }
+
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0;
+    
+      .search-field {
+        width: 100%;
+        max-width: 550px;
+        height: 59px;
+        margin-top: 20px;
+        border: 1px solid white;
+    
+        mat-form-field {
+          width: 100%;
+          background-color: inherit;
+          border-radius: inherit;
+    
+          .mat-form-field-outline {
+            border-color: #ffffff;
+            border-radius: inherit;
+          }
+    
+          .mat-form-field-flex {
+            background-color: inherit;
+            color: #ccc;
+    
+            .mat-icon-button {
+              color: #aaa;
+              margin-right: 8px;
+    
+              &:hover {
+                color: #ffffff;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .search-field input::placeholder {
+      color: rgb(255, 255, 255);
+    }
+    
+    .search-field button {
+      color: white; 
+    }
+    
+    .search-field input:focus {
+      border-color: white;
+    }
+    
+    .search-field input {
+      color: rgb(253, 253, 253);
+    }

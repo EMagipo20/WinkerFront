@@ -1,0 +1,53 @@
+.favorites-header {
+    text-align: left;
+    margin-bottom: 20px;
+    p {
+      font-size: 1rem;
+      color: #f8f8f8; 
+      margin: 5px 0 0;
+    }
+}
+
+.table-container {
+    width: 40%; 
+    margin: 0 auto; 
+    position: relative;
+
+    h2 {
+        text-align: center;
+        font-family: Roboto;
+        font-weight: 500;
+        margin-bottom: 23px;
+        margin-top: 17px;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    table {
+        width: 450px; 
+        border-collapse: collapse;
+        border: 0.5px solid rgb(207, 207, 207);
+        background-color: transparent;
+
+        th {
+            padding: 8px; 
+            text-align: center;
+        } 
+        
+        td {
+            padding: 8px; 
+            text-align: center;
+            color: white; 
+        }
+
+        th {
+            background-color: rgb(255, 255, 255);
+        }
+    }
+}
