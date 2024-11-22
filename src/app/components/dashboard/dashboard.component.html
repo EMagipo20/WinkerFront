@@ -74,7 +74,7 @@
               [color]="isEditing ? 'accent' : 'primary'"
               type="submit"
               [disabled]="postulanteForm.invalid || loading">
-        <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+        <mat-icon style="color:cyan" *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
         <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
         {{ isEditing ? 'Actualizar' : 'Guardar datos' }}
       </button>
