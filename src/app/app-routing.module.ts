@@ -33,9 +33,6 @@ import { LoginComponent } from './components/landing-page/login/login.component'
 
 const routes: Routes = [
     { 
-        path: '', redirectTo: '/login', pathMatch: 'full' 
-    },
-    { 
         path: '', redirectTo: '/index', pathMatch: 'full' 
     },
     {

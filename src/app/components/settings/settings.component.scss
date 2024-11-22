@@ -7,6 +7,15 @@
     border-radius: 8px;
     background-color: transparent;
   }
+
+  h2 {
+    text-align: center;
+    font-family: Roboto;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+  }
   
   .form-field {
     display: flex;
@@ -80,9 +89,14 @@
   .button-container {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
   }
   
   span {
     color: #ffffff;
+  }
+
+  .advanced-options {
+    display: flex;
+    justify-content: center;
   }

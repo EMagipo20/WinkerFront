@@ -7,7 +7,7 @@
           <!-- Tipo de Documento -->
           <mat-form-field class="search-field" appearance="outline">
             <mat-label class="label">Tipo de Documento</mat-label>
-            <mat-select formControlName="tipo" (selectionChange)="onTipoChange($event.value)" required>
+            <mat-select class="label" formControlName="tipo" (selectionChange)="onTipoChange($event.value)" required>
               <mat-option value="Certificado">Certificado</mat-option>
               <mat-option value="Curriculum">Curriculum</mat-option>
               <mat-option value="Diploma">Diploma</mat-option>
@@ -29,7 +29,7 @@
           <!-- Seleccionar Postulante -->
           <mat-form-field class="search-field" appearance="outline">
             <mat-label class="label">Seleccionar Postulante*</mat-label>
-            <mat-select formControlName="postulanteId" required>
+            <mat-select class="label" formControlName="postulanteId" required>
               <mat-option class="opciones" *ngFor="let postulante of postulantes" [value]="postulante.id">{{ postulante.nombreCompleto }}</mat-option>
             </mat-select>
             <mat-error *ngIf="documentoForm.get('postulanteId')?.invalid && (documentoForm.get('postulanteId')?.dirty || documentoForm.get('postulanteId')?.touched)">

@@ -1,4 +1,5 @@
 <div class="container">
+    <h2>Mi perfil de usuario</h2>
     <form [formGroup]="usuarioForm" (ngSubmit)="actualizarUsuario()">
       <!-- Campo para el Username -->
       <div class="form-field">
@@ -60,7 +61,7 @@
       <mat-checkbox formControlName="enabled" color="primary">
          <span>Habilitado</span>
       </mat-checkbox>
-  
+
       <!-- Botón para guardar los cambios -->
       <div class="button-container">
         <button mat-raised-button 
@@ -73,7 +74,35 @@
         </button>
       </div>
     </form>
-  
+
+    <br>
+
+      <!-- Opciones Avanzadas -->
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Opciones avanzadas
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="advanced-options">
+            <button 
+              mat-raised-button 
+              color="warn" 
+              (click)="openDeleteDialog()"
+              [disabled]="loading">
+              <mat-icon *ngIf="!loading">delete</mat-icon>
+              <mat-progress-spinner 
+                *ngIf="loading" 
+                diameter="20" 
+                mode="indeterminate">
+              </mat-progress-spinner>
+              {{ loading ? 'Eliminando...' : 'Eliminar cuenta' }}
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     <!-- Mensaje de carga o error -->
     <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
 </div>

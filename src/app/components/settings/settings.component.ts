@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsuarioService } from '../../services/usuario.service';
 import { AuthService } from '../../services/auth.service';
 import { Usuario } from '../../models/usuario';
+import { DeleteComponent } from '../confirme-delete/delete.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-settings',
@@ -27,7 +29,8 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.username = this.authService.getUsername();
   }
@@ -105,5 +108,30 @@ export class SettingsComponent implements OnInit {
 
   togglePasswordVisibility(field: string): void {
     this.passwordVisible[field] = !this.passwordVisible[field];
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.eliminarCuenta(this.usuarioIdLogueado);
+      }
+    });
+  }
+
+  eliminarCuenta(id: number): void {
+    this.loading = true;
+
+    this.usuarioService.eliminar(id).subscribe({
+      next: () => {
+        this.snackBar.open('Cuenta eliminada correctamente.', 'Cerrar', { duration: 3000 });
+        this.loading = false;
+      },
+      error: () => {
+        this.snackBar.open('Error al eliminar la cuenta.', 'Cerrar', { duration: 3000 });
+        this.loading = false;
+      }
+    });
   }
 }

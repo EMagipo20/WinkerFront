@@ -88,11 +88,11 @@ export class ResponderPostComponent implements OnInit {
     this.ofertaService.listarOfertaEmpleoPorEmpresa(this.empresaId).subscribe({
       next: (ofertas) => {
         this.ofertas = ofertas;
-        const postObservables = this.ofertas.map(oferta => this.postService.listarPostsPorOferta(oferta.id));
+        const postObservables = this.ofertas.map(oferta => this.postService.listarPostsPorOfertaEmpleo(oferta.id));
         
         forkJoin(postObservables).subscribe({
           next: (responses) => {
-            this.postsRecibidos = responses.flat().map(post => ({
+            this.postsRecibidos = responses.flat().filter((post) => post.disponible).map(post => ({
               ...post,
               tituloTrabajo: this.ofertas.find(o => o.id === post.ofertaEmpleoId)?.tituloTrabajo || 'No asignado',
               nombreCompleto: this.postulantes.find(p => p.id === post.postulanteId)?.nombreCompleto || 'No asignado'
@@ -123,7 +123,7 @@ export class ResponderPostComponent implements OnInit {
     this.postService.actualizarPost(post).subscribe({
       next: () => {
         this.snackBar.open('Respuesta enviada exitosamente.', 'Cerrar', { duration: 3000 });
-        this.cargarPosts(); 
+        this.postsRecibidos = this.postsRecibidos.filter((p) => p.id !== post.id); 
         this.loading = false;
       },
       error: () => {
