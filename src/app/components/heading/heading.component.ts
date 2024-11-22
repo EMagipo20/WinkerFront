@@ -78,7 +78,7 @@ export class HeadingComponent implements OnInit{
         this.rubroService.eliminarRubro(id).subscribe({
           next: () => {
             this,this.listarRubrosEmpresa();
-            this.snackBar.open('Rubro eliminado correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Rubro eliminado correctamente', 'success');
             this.loading = false;
           }
         });
@@ -94,7 +94,7 @@ export class HeadingComponent implements OnInit{
       if (this.isEditMode) {
         this.rubroService.actualizarRubro(rubros).subscribe({
           next: () => {
-            this.snackBar.open('Rubro actualizado con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Rubro actualizado con éxito', 'success');
             this.listarRubrosEmpresa();
             this.resetForm();
             this.loading = false;
@@ -103,7 +103,7 @@ export class HeadingComponent implements OnInit{
       } else {
         this.rubroService.agregarRubro(rubros).subscribe({
           next: () => {
-            this.snackBar.open('Rubro agregado con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Rubro agregado con éxito', 'success');
             this.listarRubrosEmpresa();
             this.resetForm();
             this.loading = false;
@@ -119,7 +119,7 @@ export class HeadingComponent implements OnInit{
         this.totalRubros = total;
       },
       error: () => {
-        this.snackBar.open('Error al contar los rubros.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al contar los rubros.', 'error');
       }
     });
   }
@@ -133,7 +133,7 @@ export class HeadingComponent implements OnInit{
           this.loading = false;
         },
         error: () => {
-          this.snackBar.open('Error al buscar rubros.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al buscar rubros.', 'error');
           this.loading = false;
         }
       });
@@ -152,4 +152,13 @@ export class HeadingComponent implements OnInit{
     this.headingForm.reset();
     this.isEditMode = false;
   }
+
+  private openSnackbar(message: string, type: 'success' | 'error'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: type === 'success' ? 'success-snackbar' : 'error-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
+  }  
 }

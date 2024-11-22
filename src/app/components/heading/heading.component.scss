@@ -218,3 +218,34 @@
     font-weight: 500;
   }
   
+//Mensaje dinamico con Snackbars
+::ng-deep .success-snackbar {
+  background: linear-gradient(90deg, #4caf50, #8bc34a, #9e9e9e);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+::ng-deep .error-snackbar {
+  background: linear-gradient(90deg, #f44336, #e57373, #9e9e9e);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+::ng-deep .snackBar {
+  background: transparent !important; 
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 4px; 
+}
