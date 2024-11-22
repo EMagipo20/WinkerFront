@@ -34,12 +34,12 @@ import { PostComponent } from './components/post/post.component';
 import { ResponderPostComponent } from './components/responderpost/responderpost.component';
 import { ListallapplicationsComponent } from './components/job-applications/listallapplications/listallapplications.component';
 import { SettingsComponent } from './components/settings/settings.component';
-import { LeadingComment } from '@angular/compiler';
 import { AboutComponent } from './components/landing-page/about/about.component';
 import { ContactComponent } from './components/landing-page/contact/contact.component';
 import { IndexComponent } from './components/landing-page/index/index.component';
 import { RegisterComponent } from './components/landing-page/register/register.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
+import { ReportsComponent } from './components/reports/reports.component';
 export function tokenGetter() {
   return sessionStorage.getItem('token');
 }
@@ -88,7 +88,8 @@ const jwtModuleOptions: JwtModuleOptions = {
     ContactComponent,
     IndexComponent,
     RegisterComponent, 
-    LoginComponent
+    LoginComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +98,7 @@ const jwtModuleOptions: JwtModuleOptions = {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+
     JwtModule.forRoot(jwtModuleOptions),
   ],
   providers: [

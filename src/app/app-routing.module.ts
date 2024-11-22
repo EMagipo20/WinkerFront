@@ -30,6 +30,7 @@ import { ContactComponent } from './components/landing-page/contact/contact.comp
 import { IndexComponent } from './components/landing-page/index/index.component';
 import { RegisterComponent } from './components/landing-page/register/register.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const routes: Routes = [
     { 
@@ -73,6 +74,7 @@ const routes: Routes = [
                     { path: 'accepted-applications', component: AcceptedApplicationsComponent },
                     { path: 'listapplications', component: ListApplicationsComponent }
                 ], canActivate: [segGuard]},
+            { path: 'reports', component: ReportsComponent, canActivate: [segGuard]},
 
             { path: 'settings', component: SettingsComponent, canActivate: [segGuard]},
         ]

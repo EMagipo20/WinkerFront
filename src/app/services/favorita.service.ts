@@ -24,10 +24,6 @@ export class FavoritaService {
     return this.http.get<number>(`${this.baseUrl}/contarFavoritasPorPostulante/${postulanteId}`);
   }  
 
-  listarTodos(): Observable<Favorita[]> {
-    return this.http.get<Favorita[]>(`${this.baseUrl}/ListarTodo`);
-  }
-
   listarFavoritasPorPostulante(postulanteId: number): Observable<Favorita[]> {
     return this.http.get<Favorita[]>(`${this.baseUrl}/listarFavoritasPorPostulante/${postulanteId}`);
   }

@@ -12,7 +12,6 @@ import { AuthService } from '../../../services/auth.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Empresa } from '../../../models/empresa';
 import { EmpresaService } from '../../../services/empresa.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-listapplications',

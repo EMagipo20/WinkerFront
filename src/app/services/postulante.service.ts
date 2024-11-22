@@ -31,11 +31,6 @@ export class PostulanteService {
     return this.http.delete<void>(`${this.baseUrl}/Eliminar/${id}`);
   }
 
-  // Método para obtener un postulante por ID
-  obtenerPostulantePorId(id: number): Observable<Postulante> {
-    return this.http.get<Postulante>(`${this.baseUrl}/Obtener/${id}`);
-  }
-
   // Método para buscar postulantes por nombre
   buscarPostulantePorNombre(nombreCompleto: string): Observable<Postulante[]> {
     return this.http.get<Postulante[]>(`${this.baseUrl}/BuscarPorNombre/${nombreCompleto}`);
@@ -44,11 +39,6 @@ export class PostulanteService {
   // Método para buscar postulantes por correo
   buscarPostulantePorCorreo(correo: string): Observable<Postulante[]> {
     return this.http.get<Postulante[]>(`${this.baseUrl}/BuscarPorCorreo/${correo}`);
-  }
-
-  // Método para obtener postulantes con solicitudes aceptadas
-  postulantesConSolicitudesAceptadas(): Observable<Postulante[]> {
-    return this.http.get<Postulante[]>(`${this.baseUrl}/SolicitudesAceptadas`);
   }
 
   // Método para obtener el postulanteId por username

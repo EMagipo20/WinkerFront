@@ -37,18 +37,8 @@ export class PostService {
     return this.http.get<Post[]>(`${this.baseUrl}/listarPostsPorOfertaEmpleo/${ofertaEmpleoId}`);
   }
 
-  // Método para listar posts por oferta id
-  listarPostsPorOferta(ofertaEmpleoId: number) {
-    return this.http.get<Post[]>(`${this.baseUrl}/listarPostsOferta/${ofertaEmpleoId}`);
-  }
-
   // Método para contar posts por oferta de empleo
   countPostsPorOfertaEmpleo(): Observable<Object[]> {
     return this.http.get<Object[]>(`${this.baseUrl}/count-por-oferta-empleo`);
-  }
-
-  // Obtener posts sin respuesta
-  obtenerPostsSinResponder(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.baseUrl}/sin-responder`);
   }
 }

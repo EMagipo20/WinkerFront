@@ -40,10 +40,6 @@ export class SolicitudesService {
     return this.http.get<number>(`${this.baseUrl}/ContarPorPostulante/${postulanteId}`);
   }
 
-  listarSoliudes(): Observable<Solicitudes[]> {
-    return this.http.get<Solicitudes[]>(`${this.baseUrl}/ListarTodo`);
-  }
-
   listarSolicitudesPorOferta(ofertaEmpleoId: number): Observable<Solicitudes[]> {
     return this.http.get<Solicitudes[]>(`${this.baseUrl}/listarSolicitudesPorOfertaEmpleo/${ofertaEmpleoId}`);
   }

@@ -61,6 +61,11 @@ export const navbarData: INavbarData[] = [
         label: 'Preguntas',
     },
     {
+        routeLink: 'reports',
+        icon: 'fal fa-chart-bar',
+        label: 'Reportes',
+    },
+    {
         routeLink: 'settings',
         icon: 'fas fa-cog',
         label: 'Mi Cuenta',

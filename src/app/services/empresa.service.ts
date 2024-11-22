@@ -32,11 +32,6 @@ export class EmpresaService {
     return this.http.get<Empresa[]>(`${this.baseUrl}/ListarTodo`);
   }
 
-  // Método para obtener una empresa por ID
-  obtenerEmpresaPorId(id: number): Observable<Empresa> {
-    return this.http.get<Empresa>(`${this.baseUrl}/Obtener/${id}`);
-  }
-
   // Método para buscar empresas por RUC
   buscarEmpresaPorRuc(ruc: string): Observable<Empresa[]> {
     return this.http.get<Empresa[]>(`${this.baseUrl}/BuscarPorRuc/${ruc}`);
