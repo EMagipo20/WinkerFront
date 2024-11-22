@@ -58,7 +58,7 @@
           <div class="preview-box" *ngIf="!fotoPreview"></div>
           <img *ngIf="fotoPreview" [src]="fotoPreview" class="preview-img" alt="Vista previa de la foto">
         </div>
-        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Logotipo</button>
+        <button style="color:rgb(238, 147, 10)" mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Logotipo</button>
         <input type="file" #fileInput (change)="onFileChange($event, 'logotipoBase64')" hidden>
       </div>
     </div> 
