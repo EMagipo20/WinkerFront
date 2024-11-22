@@ -68,7 +68,7 @@
               [color]="isEditing ? 'accent' : 'primary'"
               type="submit"
               [disabled]="empresaForm.invalid || loading">
-        <mat-icon *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
+        <mat-icon style="color:aqua" *ngIf="!loading">{{ isEditing ? 'edit' : 'save' }}</mat-icon>
         <mat-progress-spinner *ngIf="loading" diameter="20" mode="indeterminate"></mat-progress-spinner>
         {{ isEditing ? 'Actualizar' : 'Guardar datos' }}
       </button>
