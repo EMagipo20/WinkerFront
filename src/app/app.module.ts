@@ -7,9 +7,8 @@ import { AngularMaterialModule } from './shared/angular-material/angular-materia
 import { AppComponent } from './app.component';
 import { SublevelMenuComponent } from './components/sidenav-empresa/sublevel-menu.component';
 import { SidenavEmpresaComponent } from './components/sidenav-empresa/sidenav.component';
-
-import { HttpClientModule } from '@angular/common/http';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
 import { SidenavPostulanteComponent } from './components/sidenav-postulante/sidenav.component';
 import { Sublevel2MenuComponent } from './components/sidenav-postulante/sublevel2-menu.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -42,6 +41,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { ReportsComponent } from './components/general-reports/reports/reports.component';
 import { ReportLocationComponent } from './components/general-reports/report-location/report-location.component';
 import { PostsRespondidosComponent } from './components/posts-respondidos/posts-respondidos.component';
+
 export function tokenGetter() {
   return sessionStorage.getItem('token');
 }
