@@ -1,48 +1,78 @@
+<!-- Contenedor de búsqueda -->
 <div class="search-container">
   <mat-form-field class="search-field" appearance="outline">
     <input
       matInput
       [(ngModel)]="searchTerm"
       (keyup.enter)="buscarEmpresa(searchTerm)"
-      placeholder="Ingrese RUC o nombre"
+      placeholder="Ingrese RUC o nombre de la empresa"
+      aria-label="Campo de búsqueda"
     />
-    <button *ngIf="searchTerm" mat-icon-button matSuffix aria-label="Clear" (click)="clearSearch()">
+    <button
+      *ngIf="searchTerm"
+      mat-icon-button
+      matSuffix
+      aria-label="Limpiar búsqueda"
+      (click)="clearSearch()">
       <mat-icon>close</mat-icon>
     </button>
-    <button mat-icon-button matSuffix aria-label="Search" (click)="buscarEmpresa(searchTerm)">
+    <button
+      mat-icon-button
+      matSuffix
+      aria-label="Buscar empresa"
+      (click)="buscarEmpresa(searchTerm)">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </div>
 
+<!-- Contenedor principal -->
 <div class="container">
-  <div *ngIf="loading">Cargando empresas...</div>
+  <!-- Indicador de carga -->
+  <div *ngIf="loading" class="loading-indicator">
+    <mat-spinner diameter="30"></mat-spinner>
+    <p>Cargando empresas...</p>
+  </div>
 
-  <div class="card-container" *ngIf="!loading">
+  <!-- Tarjetas de empresas -->
+  <div class="card-container" *ngIf="!loading && empresas.length > 0">
     <div class="card" *ngFor="let empresa of empresas">
+      <!-- Logotipo -->
       <div class="logo-container">
-        <img *ngIf="empresa.logotipoBase64" [src]="previewImage(empresa.logotipoBase64)" alt="Logotipo de {{ empresa.nombre }}" class="logo">
+        <img
+          *ngIf="empresa.logotipoBase64"
+          [src]="previewImage(empresa.logotipoBase64)"
+          alt="Logotipo de {{ empresa.nombre }}"
+          class="logo"
+        />
+        <mat-icon *ngIf="!empresa.logotipoBase64" class="placeholder-icon">business</mat-icon>
       </div>
-      <h3>{{ empresa.nombre }}</h3>
 
+      <!-- Detalles de la empresa -->
+      <h3 class="empresa-nombre">{{ empresa.nombre }}</h3>
       <ul class="empresa-atributos">
         <li>
-          <span class="icon material-icons">badge</span> <!-- Icono de RUC -->
-          <strong>RUC: </strong> &nbsp; {{ empresa.ruc }}
+          <mat-icon class="icon">badge</mat-icon>
+          <strong>RUC:</strong> &nbsp; {{ empresa.ruc }}
         </li>
         <li>
-          <span class="icon material-icons">phone</span> <!-- Icono de Teléfono -->
-          <strong>Teléfono:</strong> &nbsp; {{ empresa.telefono }}
+          <mat-icon class="icon">phone</mat-icon>
+          <strong>Teléfono:</strong> &nbsp; {{ empresa.telefono || 'No disponible' }}
         </li>
         <li>
-          <span class="icon material-icons">person</span> <!-- Icono de Usuario -->
-          <strong>Usuario: </strong> &nbsp; {{ empresa.username }}
+          <mat-icon class="icon">person</mat-icon>
+          <strong>Usuario:</strong> &nbsp; {{ empresa.username || 'No disponible' }}
         </li>
         <li>
-          <span class="icon material-icons">business</span> <!-- Icono de Rubro -->
-          <strong>Rubro: </strong> &nbsp; {{ empresa.nombreRubro }}
+          <mat-icon class="icon">business</mat-icon>
+          <strong>Rubro:</strong> &nbsp; {{ empresa.nombreRubro || 'No especificado' }}
         </li>
       </ul>
     </div>
+  </div>
+
+  <!-- Mensaje cuando no hay resultados -->
+  <div *ngIf="!loading && empresas.length === 0" class="no-results">
+    <p>No se encontraron empresas. Intente con otro término de búsqueda.</p>
   </div>
 </div>
