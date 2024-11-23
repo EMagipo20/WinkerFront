@@ -30,7 +30,9 @@ import { ContactComponent } from './components/landing-page/contact/contact.comp
 import { IndexComponent } from './components/landing-page/index/index.component';
 import { RegisterComponent } from './components/landing-page/register/register.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
-import { ReportsComponent } from './components/reports/reports.component';
+import { GeneralReportsComponent } from './components/general-reports/general-reports.component';
+import { ReportsComponent } from './components/general-reports/reports/reports.component';
+import { ReportLocationComponent } from './components/general-reports/report-location/report-location.component';
 
 const routes: Routes = [
     { 
@@ -74,8 +76,12 @@ const routes: Routes = [
                     { path: 'accepted-applications', component: AcceptedApplicationsComponent },
                     { path: 'listapplications', component: ListApplicationsComponent }
                 ], canActivate: [segGuard]},
-            { path: 'reports', component: ReportsComponent, canActivate: [segGuard]},
+            { path: 'general-reports', component: GeneralReportsComponent,
+                children: [
+                    { path: 'reports', component: ReportsComponent },
+                    { path: 'report-location', component: ReportLocationComponent }
 
+                ], canActivate: [segGuard]},
             { path: 'settings', component: SettingsComponent, canActivate: [segGuard]},
         ]
     },

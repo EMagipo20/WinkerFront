@@ -26,7 +26,6 @@ import { EnterpriceComponent } from './components/enterprice/enterprice.componen
 import { InsertupdatedocumentsComponent } from './components/documents/insertupdatedocuments/insertupdatedocuments.component';
 import { ListdeletedocumentsComponent } from './components/documents/listdeletedocuments/listdeletedocuments.component';
 import { DetailsOfferComponent } from './components/details-offer/details-offer';
-import { JobApplicationsComponent } from './components/job-applications/job-applications.component';
 import { DetailsPostulantComponent } from './components/details-postulant/details-postulant.component';
 import { AcceptedApplicationsComponent } from './components/job-applications/accepted-applications/accepted-applications.component';
 import { ListApplicationsComponent } from './components/job-applications/listapplications/listapplications.component';
@@ -39,7 +38,9 @@ import { ContactComponent } from './components/landing-page/contact/contact.comp
 import { IndexComponent } from './components/landing-page/index/index.component';
 import { RegisterComponent } from './components/landing-page/register/register.component';
 import { LoginComponent } from './components/landing-page/login/login.component';
-import { ReportsComponent } from './components/reports/reports.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { ReportsComponent } from './components/general-reports/reports/reports.component';
+import { ReportLocationComponent } from './components/general-reports/report-location/report-location.component';
 export function tokenGetter() {
   return sessionStorage.getItem('token');
 }
@@ -89,7 +90,8 @@ const jwtModuleOptions: JwtModuleOptions = {
     IndexComponent,
     RegisterComponent, 
     LoginComponent,
-    ReportsComponent
+    ReportsComponent,
+    ReportLocationComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,7 @@ const jwtModuleOptions: JwtModuleOptions = {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-
+    NgApexchartsModule,
     JwtModule.forRoot(jwtModuleOptions),
   ],
   providers: [

@@ -22,9 +22,6 @@ export class PostComponent {
     this.post.respuesta = ''; 
     this.post.disponible = true;
     this.post.fechaPublicacion = new Date();
-
-    console.log("Datos del post a enviar:", this.post);
-
     this.postService.agregarPost(this.post).subscribe({
       next: () => {
         this.snackBar.open('Post enviado exitosamente.', 'Cerrar', { duration: 3000 });

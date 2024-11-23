@@ -1,0 +1,22 @@
+<div *ngIf="isLoading" style="text-align: center; margin-top: 20px;">
+    <p>Cargando reporte...</p>
+  </div>
+  
+  <div *ngIf="!isLoading && error" class="error" style="text-align: center; color: red;">
+    <p>{{ error }}</p>
+  </div>
+  
+  <h3>Reporte N°1</h3>
+  <div *ngIf="!isLoading && !error">
+    <div class="chart-container" style="width: 80%; margin: auto;">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [title]="chartOptions.title"
+        [plotOptions]="chartOptions.plotOptions"
+      >
+      </apx-chart>
+    </div>
+  </div>
+  

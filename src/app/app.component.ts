@@ -84,6 +84,9 @@ export class AppComponent {
       case 'job-applications':
         this.toolbarTitle = 'Gestion de solicitudes';
         break;
+      case 'general-reports':
+        this.toolbarTitle = 'Mis reportes'
+        break;
       case 'responderpost':
         this.toolbarTitle = 'Preguntas frecuentes';
         break;

@@ -16,11 +16,14 @@ export class HeadingComponent implements OnInit{
   rubro: Rubro = new Rubro();
 
   // listar rubros
-  rub: Rubro[] = [];
+  rubros: Rubro[] = [];
   displayedColumns: string[] = ['id', 'nombre', 'acciones'];
 
   // elemento de carga
   loading = false;
+
+  //Filtro de busqueda
+  filtro: string = '';
 
   // variable para verificar si es una actualización
   isEditMode = false;
@@ -54,13 +57,12 @@ export class HeadingComponent implements OnInit{
     this.loading = true;
     this.rubroService.listarRubros().subscribe({
       next: (ru) => {
-        this.rub = ru;
+        this.rubros = ru;
         this.loading = false;
       }
     });
   }
 
-  // Método para editar un tipo de trabajo
   editarRubro(rubro: Rubro): void {
     this.isEditMode = true;
     this.headingForm.patchValue({
@@ -124,26 +126,31 @@ export class HeadingComponent implements OnInit{
     });
   }
 
-  buscarRubro(): void {
-    if (this.searchTerm.trim() !== '') {
-      this.loading = true;
-      this.rubroService.buscarRubroPorNombre(this.searchTerm).subscribe({
-        next: (ru) => {
-          this.rub = ru;
-          this.loading = false;
-        },
-        error: () => {
-          this.openSnackbar('Error al buscar rubros.', 'error');
-          this.loading = false;
-        }
-      });
-    } else {
+  buscarRubro(filtro: string): void {
+    if (filtro.trim() === '') {
       this.listarRubrosEmpresa();
+      return;
     }
-  }
+  
+    this.loading = true;
+    this.rubroService.buscarRubroPorNombre(filtro.trim()).subscribe({
+      next: (rubros) => {
+        this.rubros = rubros;
+        if (this.rubros.length === 0) {
+          this.snackBar.open(`No se encontraron rubros con el nombre: "${filtro}"`, 'Cerrar', { duration: 3000 });
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error al buscar rubros:', err);
+        this.snackBar.open('Error al realizar la búsqueda de rubros', 'Cerrar', { duration: 3000 });
+        this.loading = false;
+      }
+    });
+  }  
 
   clearSearch(): void {
-    this.searchTerm = '';
+    this.filtro = '';
     this.listarRubrosEmpresa();
   }
 

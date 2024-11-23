@@ -61,9 +61,21 @@ export const navbarData: INavbarData[] = [
         label: 'Preguntas',
     },
     {
-        routeLink: 'reports',
+        routeLink: 'general-reports',
         icon: 'fal fa-chart-bar',
         label: 'Reportes',
+        items: [
+            {
+                routeLink: 'general-reports/reports',
+                icon: 'fal fa-eye',
+                label: 'Reporte N° 1',
+            },
+            {
+                routeLink: 'general-reports/report-location',
+                icon: 'fal fa-eye',
+                label: 'Reporte N° 2',
+            }
+        ]
     },
     {
         routeLink: 'settings',

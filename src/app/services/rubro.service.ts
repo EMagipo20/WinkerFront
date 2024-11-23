@@ -40,6 +40,6 @@ export class RubroService {
 
   // Método para buscar un rubro por nombre
   buscarRubroPorNombre(nombre: string): Observable<Rubro[]> {
-    return this.http.get<Rubro[]>(`${this.baseUrl}/nombre`, { params: { nombre } });
+    return this.http.get<Rubro[]>(`${this.baseUrl}/nombre?nombre=${nombre}`);
   }
 }
