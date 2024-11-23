@@ -138,14 +138,11 @@ export class ListdeletedocumentsComponent implements OnInit {
     const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: 'application/pdf' });
-  
-    // Crea una URL para el Blob
+
     const blobUrl = URL.createObjectURL(blob);
   
-    // Abre el archivo PDF en una nueva ventana
     window.open(blobUrl, '_blank');
   
-    // Libera la URL del Blob después de abrirla
     URL.revokeObjectURL(blobUrl);
   }
 
