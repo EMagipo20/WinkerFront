@@ -48,10 +48,10 @@ export class ReportLocationComponent implements OnInit {
         type: 'bar',
         height: 350,
         width: 950,
-        background: 'rgba(255, 255, 255, 0.9)', // Fondo blanco opaco
+        background: 'rgba(255, 255, 255, 0.9)',
       },
       xaxis: {
-        categories: [], // Se llenará dinámicamente
+        categories: [], 
         labels: {
           style: {
             colors: '#000000',
