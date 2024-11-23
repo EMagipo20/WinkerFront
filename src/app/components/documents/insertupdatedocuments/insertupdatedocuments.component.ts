@@ -16,10 +16,8 @@ export class InsertupdatedocumentsComponent implements OnInit {
   documentoForm: FormGroup = new FormGroup({});
   loading = false;
 
-  //Para visualizar nombre del archivo
   fileName: string = '';
 
-  //Para especificar archivo
   isOtroTipoVisible = false; 
 
   // Listar postulantes
