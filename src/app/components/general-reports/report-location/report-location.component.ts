@@ -13,7 +13,6 @@ import {
   ApexGrid,
   ApexLegend,
 } from 'ng-apexcharts';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
