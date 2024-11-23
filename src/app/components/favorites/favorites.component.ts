@@ -52,7 +52,7 @@ export class FavoritesComponent implements OnInit {
 
   obtenerPostulanteId(): void {
     if (!this.username) {
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
 
@@ -69,14 +69,10 @@ export class FavoritesComponent implements OnInit {
           this.obtenerConteoFavoritas(this.postulanteId);
           this.cargarFavoritas(this.postulanteId);
         } else {
-          this.snackBar.open('Postulante no encontrado', 'Cerrar', {
-            duration: 3000,
-          });
+          this.openSnackbar('Postulante no encontrado', 'warning');
         }
       } else {
-        this.snackBar.open('Usuario no encontrado', 'Cerrar', {
-          duration: 3000,
-        });
+        this.openSnackbar('Usuario no encontrado', 'warning');
       }
     });
   }
@@ -98,9 +94,7 @@ export class FavoritesComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.snackBar.open('Error al cargar favoritas.', 'Cerrar', {
-          duration: 3000,
-        });
+        this.openSnackbar('Error al cargar favoritas.', 'error');
       },
     });
   }
@@ -131,12 +125,12 @@ export class FavoritesComponent implements OnInit {
         this.favoritaService.eliminarFavorita(id).subscribe({
           next: () => {
             this.cargarFavoritas(this.postulanteId); 
-            this.snackBar.open('Oferta favorita eliminada correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Oferta favorita eliminada correctamente', 'success');
             this.loading = false;
           },
           error: () => {
             this.loading = false;
-            this.snackBar.open('Error al eliminar favorita', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Error al eliminar favorita', 'error');
           }
         });
       }
@@ -149,10 +143,20 @@ export class FavoritesComponent implements OnInit {
         this.favoriteCount = count;
       },
       error: () => {
-        this.snackBar.open('Error al obtener el conteo de ofertas favoritas.', 'Cerrar', {
-          duration: 3000,
-        });
+        this.openSnackbar('Error al obtener el conteo de ofertas favoritas.', 'error');
       },
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

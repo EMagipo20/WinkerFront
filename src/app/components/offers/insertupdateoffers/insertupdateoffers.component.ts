@@ -29,7 +29,6 @@ export class InsertupdateoffersComponent implements OnInit {
 
   ofertas: OfertaEmpleo | null = null;
 
-  //Variable para verificar si estamos en modo edición
   isEditing: boolean = false;
 
   constructor(
@@ -101,7 +100,7 @@ export class InsertupdateoffersComponent implements OnInit {
 
   registrarOferta(): void {
     if (this.ofertaForm.invalid) {
-      this.snackBar.open('Por favor, complete todos los campos requeridos.', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('Por favor, complete todos los campos requeridos.', 'warning');
       return;
     }
 
@@ -114,12 +113,12 @@ export class InsertupdateoffersComponent implements OnInit {
       oferta.fechaPublicacion = new Date();
       this.ofertaEmpleoService.agregarOferta(oferta).subscribe({
         next: () => {
-          this.snackBar.open('Oferta de empleo registrada exitosamente.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Oferta de empleo registrada exitosamente.', 'success');
           this.loading = false;
           this.ofertaForm.get('fechaVencimiento')?.setValue(new Date());
         },
         error: () => {
-          this.snackBar.open('Error al registrar la oferta.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al registrar la oferta.', 'error');
           this.loading = false;
         }
       });
@@ -133,16 +132,28 @@ export class InsertupdateoffersComponent implements OnInit {
 
     this.ofertaEmpleoService.actualizarOferta(oferta).subscribe({
       next: () => {
-        this.snackBar.open('Oferta de empleo actualizada exitosamente.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Oferta de empleo actualizada exitosamente.', 'success');
         this.loading = false;
         this.isEditing = false;
         this.ofertaForm.reset();
         this.router.navigate(['/sidenav-empresa/offers/listdeleteoffers']);
       },
       error: () => {
-        this.snackBar.open('Error al actualizar la oferta.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al actualizar la oferta.', 'error');
         this.loading = false;
       }
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

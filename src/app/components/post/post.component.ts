@@ -24,16 +24,28 @@ export class PostComponent {
     this.post.fechaPublicacion = new Date();
     this.postService.agregarPost(this.post).subscribe({
       next: () => {
-        this.snackBar.open('Post enviado exitosamente.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Post enviado exitosamente.', 'success');
         this.dialogRef.close();
       },
       error: () => {
-        this.snackBar.open('Error al enviar el post.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al enviar el post.', 'error');
       }
     });
   }
 
   cancelar(): void {
     this.dialogRef.close();
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

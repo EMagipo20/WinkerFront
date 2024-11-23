@@ -13,6 +13,7 @@ import {
   ApexGrid,
   ApexLegend,
 } from 'ng-apexcharts';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -72,7 +73,7 @@ export class ReportLocationComponent implements OnInit {
       },
       plotOptions: {
         bar: {
-          horizontal: true, // Barras horizontales
+          horizontal: true,
           barHeight: '50%',
         },
       },
@@ -125,7 +126,6 @@ export class ReportLocationComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.error = 'Error al cargar el reporte. Intente nuevamente.';
-        console.error('Error al obtener los datos del servicio:', err);
       },
     });
   }

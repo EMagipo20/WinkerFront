@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TipoTrabajo } from '../../models/tipoTrabajo';
 import { TipoTrabajoService } from '../../services/tipoTrabajo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteComponent } from '../confirme-delete/delete.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-typeWork',
@@ -15,8 +17,9 @@ export class TypeWorkComponent implements OnInit{
   typeWorkForm: FormGroup = new FormGroup({});
   tipoTrabajo: TipoTrabajo = new TipoTrabajo();
 
-  // listar tipos de trabajo
-  tiposTrabajos: TipoTrabajo[] = [];
+  dataSource = new MatTableDataSource<TipoTrabajo>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns: string[] = ['id', 'tipo', 'dia', 'horaInicio', 'horaFin', 'acciones'];
 
   // elemento de carga
@@ -53,10 +56,13 @@ export class TypeWorkComponent implements OnInit{
     this.loading = true;
     this.tipoTrabajoService.listarTipoTrabajos().subscribe({
       next: (tipos) => {
-        this.tiposTrabajos = tipos.sort((a, b) => a.id - b.id);
-        this.tiposTrabajos = tipos;
+        this.dataSource.data = tipos.sort((a, b) => a.id - b.id);
         this.loading = false;
-      }
+      },
+      error: () => {
+        this.openSnackbar('Error al cargar los tipos de trabajo.', 'error');
+        this.loading = false;
+      },
     });
   }
 
@@ -81,7 +87,7 @@ export class TypeWorkComponent implements OnInit{
         this.tipoTrabajoService.eliminarTipoTrabajo(id).subscribe({
           next: () => {
             this.listarTiposTrabajo();
-            this.snackBar.open('Tipo de trabajo eliminado correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Tipo de trabajo eliminado correctamente', 'success');
             this.loading = false;
           }
         });
@@ -95,10 +101,9 @@ export class TypeWorkComponent implements OnInit{
       const tipoTrabajo = this.typeWorkForm.value;
 
       if (this.isEditMode) {
-        // Actualizar el tipo de trabajo existente
         this.tipoTrabajoService.actualizarTipoTrabajo(tipoTrabajo).subscribe({
           next: () => {
-            this.snackBar.open('Tipo de trabajo actualizado con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Tipo de trabajo actualizado con éxito', 'success');
             this.listarTiposTrabajo();
             this.resetForm();
             this.loading = false;
@@ -108,7 +113,7 @@ export class TypeWorkComponent implements OnInit{
         // Agregar un nuevo tipo de trabajo
         this.tipoTrabajoService.agregarTipoTrabajo(tipoTrabajo).subscribe({
           next: () => {
-            this.snackBar.open('Tipo de trabajo agregado con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Tipo de trabajo agregado con éxito', 'success');
             this.listarTiposTrabajo();
             this.resetForm();
             this.loading = false;
@@ -119,25 +124,10 @@ export class TypeWorkComponent implements OnInit{
   }
 
   buscarTiposTrabajo(filtro: string): void {
-    if (filtro.trim() === '') {
-      this.listarTiposTrabajo();
-      return;
+    this.dataSource.filter = filtro.trim().toLowerCase();
+    if (this.dataSource.filteredData.length === 0) {
+      this.openSnackbar(`No se encontraron resultados para: ${filtro}`, 'warning');
     }
-
-    this.loading = true;
-    this.tipoTrabajoService.buscarPorTipo(filtro).subscribe({
-      next: (tipos) => {
-        this.tiposTrabajos = tipos;
-        if (this.tiposTrabajos.length === 0) {
-          this.snackBar.open(`No se ha encontrado el tipo con el dato: ${filtro}`, 'Cerrar', { duration: 3000 });
-        }
-        this.loading = false;
-      },
-      error: () => {
-        this.snackBar.open('Error al realizar la búsqueda de tipos de trabajo', 'Cerrar', { duration: 3000 });
-        this.loading = false;
-      }
-    });
   }
 
   clearSearch(): void {
@@ -148,5 +138,17 @@ export class TypeWorkComponent implements OnInit{
   private resetForm(): void {
     this.typeWorkForm.reset();
     this.isEditMode = false;
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

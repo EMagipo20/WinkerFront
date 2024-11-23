@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UbicacionOferta } from '../../models/ubicacionOferta';
 import { UbicacionOfertaService } from '../../services/ubicacionOferta.service';
@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from '../confirme-delete/delete.component';
 import { forkJoin } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-locationOffer',
@@ -16,7 +18,10 @@ export class LocationOfferComponent {
   locationOfferForm: FormGroup = new FormGroup({});
   ubicacionOferta: UbicacionOferta = new UbicacionOferta();
 
-  ubicaciones: UbicacionOferta [] = [];
+  // DataSource y paginador para la tabla
+  dataSource = new MatTableDataSource<UbicacionOferta>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns: string[] = ['id', 'departamento', 'distrito', 'direccion', 'acciones'];
 
   // elemento de carga
@@ -24,7 +29,6 @@ export class LocationOfferComponent {
 
   filtro: string = '';
 
-  // variable para verificar si es una actualización
   isEditMode = false;
 
   constructor(
@@ -51,9 +55,13 @@ export class LocationOfferComponent {
     this.loading = true;
     this.ubicacionService.listarUbicaciones().subscribe({
       next: (ubis) => {
-        this.ubicaciones = ubis;
+        this.dataSource.data = ubis.sort((a, b) => a.id - b.id);
         this.loading = false;
-      }
+      },
+      error: () => {
+        this.openSnackbar('Error al cargar ubicaciones.', 'error');
+        this.loading = false;
+      },
     });
   }
 
@@ -76,7 +84,7 @@ export class LocationOfferComponent {
         this.ubicacionService.eliminarUbicacion(id).subscribe({
           next: () => {
             this.listarUbicacionesOferta();
-            this.snackBar.open('Ubicacion oferta eliminado correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Ubicacion oferta eliminado correctamente', 'success');
             this.loading = false;
           }
         });
@@ -92,7 +100,7 @@ export class LocationOfferComponent {
       if (this.isEditMode) {
         this.ubicacionService.actualizarUbicacion(ubis).subscribe({
           next: () => {
-            this.snackBar.open('Ubicacion oferta actualizada con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Ubicacion oferta actualizada con éxito', 'success');
             this.listarUbicacionesOferta();
             this.resetForm();
             this.loading = false;
@@ -101,7 +109,7 @@ export class LocationOfferComponent {
       } else {
         this.ubicacionService.agregarUbicacion(ubis).subscribe({
           next: () => {
-            this.snackBar.open('Ubicacion oferta agregado con éxito', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Ubicacion oferta registrada con éxito', 'success');
             this.listarUbicacionesOferta();
             this.resetForm();
             this.loading = false;
@@ -116,34 +124,31 @@ export class LocationOfferComponent {
       this.listarUbicacionesOferta();
       return;
     }
-    
+
     this.loading = true;
-  
-    // Ejecutar las tres búsquedas en paralelo
+
     forkJoin({
       ubicacionesDistrito: this.ubicacionService.buscarPorDistrito(filtro),
       ubicacionesDepartamento: this.ubicacionService.buscarPorDepartamento(filtro),
-      ubicacionesDireccion: this.ubicacionService.buscarPorDireccion(filtro)
+      ubicacionesDireccion: this.ubicacionService.buscarPorDireccion(filtro),
     }).subscribe({
       next: ({ ubicacionesDistrito, ubicacionesDepartamento, ubicacionesDireccion }) => {
-        // Concatenar los resultados de las tres búsquedas
-        this.ubicaciones = [
+        this.dataSource.data = [
           ...ubicacionesDistrito,
           ...ubicacionesDepartamento,
-          ...ubicacionesDireccion
+          ...ubicacionesDireccion,
         ];
-  
-        // Verificar si se encontraron ubicaciones
-        if (this.ubicaciones.length === 0) {
-          this.snackBar.open(`No se ha encontrado un departamento, distrito o dirección con el nombre: ${filtro}`, 'Cerrar', { duration: 3000 });
+
+        if (this.dataSource.data.length === 0) {
+          this.openSnackbar(`No se encontraron resultados para: ${filtro}`, 'warning');
         }
-        
+
         this.loading = false;
       },
       error: () => {
-        this.snackBar.open('Error al realizar la búsqueda de ubicaciones', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al realizar la búsqueda.', 'error');
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -155,5 +160,17 @@ export class LocationOfferComponent {
   private resetForm(): void {
     this.locationOfferForm.reset();
     this.isEditMode = false;
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

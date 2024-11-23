@@ -54,7 +54,7 @@ export class ListApplicationsComponent implements OnInit {
           this.ofertas = ofertas;
           this.obtenerEmpresaId();
         },
-        error: () => this.snackBar.open('Error al cargar ofertas.', 'Cerrar', { duration: 3000 })
+        error: () => this.openSnackbar('Error al cargar ofertas.', 'error')
       });
     }
   
@@ -64,13 +64,13 @@ export class ListApplicationsComponent implements OnInit {
           this.postulantes = postulantes;
           this.obtenerEmpresaId();
         },
-        error: () => this.snackBar.open('Error al cargar postulantes.', 'Cerrar', { duration: 3000 })
+        error: () => this.openSnackbar('Error al cargar postulantes.', 'error')
       });
     }
   
     obtenerEmpresaId(): void {
       if (!this.username) {
-        this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('No hay usuario logeado', 'warning');
         return;
       }
       this.usuarioService.listarTodos().subscribe(usuarios => {
@@ -82,11 +82,11 @@ export class ListApplicationsComponent implements OnInit {
               this.empresaId = empresa.id;
               this.cargarSolicitudes();
             } else {
-              this.snackBar.open('Empresa no encontrada', 'Cerrar', { duration: 3000 });
+              this.openSnackbar('Empresa no encontrada', 'warning');
             }
           });
         } else {
-          this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Usuario no encontrado', 'warning');
         }
       });
     }
@@ -109,14 +109,14 @@ export class ListApplicationsComponent implements OnInit {
               },
               error: () => {
                 this.loading = false;
-                this.snackBar.open('Error al cargar las solicitudes.', 'Cerrar', { duration: 3000 });
+                this.openSnackbar('Error al cargar las solicitudes.', 'error');
               }
             });
           });
         },
         error: () => {
           this.loading = false;
-          this.snackBar.open('Error al cargar las ofertas.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al cargar las ofertas.', 'error');
         }
       });
     }
@@ -137,7 +137,7 @@ export class ListApplicationsComponent implements OnInit {
               filteredIds.includes(solicitud.postulanteId)
             );
           },
-          error: () => this.snackBar.open('Error al buscar postulante.', 'Cerrar', { duration: 3000 })
+          error: () => this.openSnackbar('Error al buscar postulante.', 'error')
         });
       }
     }
@@ -151,11 +151,11 @@ export class ListApplicationsComponent implements OnInit {
       solicitud.estadoSolicitud = 'Aceptada';
       this.solicitudService.actualizarSolicitud(solicitud).subscribe({
         next: () => {
-          this.snackBar.open('Solicitud aceptada correctamente.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Solicitud aceptada correctamente.', 'success');
           this.cargarSolicitudes();
         },
         error: () => {
-          this.snackBar.open('Error al aceptar la solicitud.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al aceptar la solicitud.', 'error');
         }
       });
     }
@@ -164,11 +164,11 @@ export class ListApplicationsComponent implements OnInit {
       solicitud.estadoSolicitud = 'Rechazada';
       this.solicitudService.actualizarSolicitud(solicitud).subscribe({
         next: () => {
-          this.snackBar.open('Solicitud rechazada correctamente.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Solicitud rechazada correctamente.', 'success');
           this.cargarSolicitudes();
         },
         error: () => {
-          this.snackBar.open('Error al rechazar la solicitud.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al rechazar la solicitud.', 'error');
         }
       });
     }
@@ -181,7 +181,19 @@ export class ListApplicationsComponent implements OnInit {
           data: postulante
         });
       } else {
-        this.snackBar.open('No se encontró el postulante.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('No se encontró el postulante.', 'warning');
       }
+    }
+
+    private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+      this.snackBar.open(message, '', {
+        duration: 3000,
+        panelClass: 
+          type === 'success' ? 'success-snackbar' : 
+          type === 'error' ? 'error-snackbar' : 
+          'warning-snackbar',
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
     }
 }

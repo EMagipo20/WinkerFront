@@ -88,7 +88,7 @@ export class ListOffersPostulanteComponent implements OnInit{
           this.postulanteId = id;
         },
         error: () => {
-          this.snackBar.open('Error: No se pudo obtener el ID del postulante.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error: No se pudo obtener el ID del postulante.', 'error');
         }
       });
     }
@@ -152,7 +152,7 @@ export class ListOffersPostulanteComponent implements OnInit{
   
   private mostrarErrorCargarOfertas(): void {
     this.loading = false;
-    this.snackBar.open('Error al cargar las ofertas de empleo.', 'Cerrar', { duration: 3000 });
+    this.openSnackbar('Error al cargar las ofertas de empleo.', 'error');
   }
   
   toggleSoloActivas(): void {
@@ -169,7 +169,7 @@ export class ListOffersPostulanteComponent implements OnInit{
         this.ofertaservice.eliminarOferta(id).subscribe({
           next: () => {
             this.cargarOfertas();
-            this.snackBar.open('Oferta de empleo eliminado correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Oferta de empleo eliminado correctamente', 'success');
             this.loading = false;
           }
         });
@@ -183,13 +183,13 @@ export class ListOffersPostulanteComponent implements OnInit{
     if (isFavorite) {
       this.favoritaService.eliminarFavorita(ofertaId).subscribe(() => {
         this.favoritas = this.favoritas.filter(id => id !== ofertaId);
-        this.snackBar.open('Oferta removida de favoritos.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Oferta removida de favoritos.', 'success');
       });
     } else {
       const favorita = { postulanteId: this.postulanteId, ofertaEmpleoId: ofertaId };
       this.favoritaService.agregarFavorita(favorita).subscribe(() => {
         this.favoritas.push(ofertaId);
-        this.snackBar.open('Oferta agregada a favoritos.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Oferta agregada a favoritos.', 'success');
       });
     }
   }
@@ -228,11 +228,11 @@ export class ListOffersPostulanteComponent implements OnInit{
     this.loading = true;
     this.solicitudService.agregarSolicitud(solicitud).subscribe({
       next: () => {
-        this.snackBar.open('Solicitud enviada exitosamente.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Solicitud enviada exitosamente.', 'success');
         this.loading = false;
       },
       error: () => {
-        this.snackBar.open('Error al enviar la solicitud.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al enviar la solicitud.', 'error');
         this.loading = false;
       }
     });
@@ -261,7 +261,7 @@ export class ListOffersPostulanteComponent implements OnInit{
           }));
         },
         error: () => {
-          this.snackBar.open('Error al buscar ofertas de empleo', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al buscar ofertas de empleo', 'error');
         }
       });
     }
@@ -279,7 +279,7 @@ export class ListOffersPostulanteComponent implements OnInit{
           }));
         },
         error: () => {
-          this.snackBar.open('Error al filtrar ofertas con mejores salarios.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al filtrar ofertas con mejores salarios.', 'error');
         }
       });
     } else {
@@ -290,5 +290,17 @@ export class ListOffersPostulanteComponent implements OnInit{
   clearSearch(): void {
     this.tituloOferta = '';
     this.buscarOfertaPorTitulo(this.tituloOferta);
-  }  
+  }
+  
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
+  }
 }

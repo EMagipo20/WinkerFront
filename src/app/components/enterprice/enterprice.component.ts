@@ -37,7 +37,7 @@ export class EnterpriceComponent implements OnInit {
         this.usuarios = u;
         this.listarEmpresas();
       },
-      error: () => this.snackBar.open('Error al cargar usuarios.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar usuarios.', 'error')
     });
   }
 
@@ -47,7 +47,7 @@ export class EnterpriceComponent implements OnInit {
         this.rubros = r;
         this.listarEmpresas();
       },
-      error: () => this.snackBar.open('Error al cargar rubros.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar rubros.', 'error')
     });
   }
 
@@ -63,8 +63,7 @@ export class EnterpriceComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error al listar empresas:', err);
-        this.snackBar.open('Error al listar empresas.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al listar empresas.', 'error');
         this.loading = false;
       }
     });
@@ -101,11 +100,11 @@ export class EnterpriceComponent implements OnInit {
         this.loading = false;
 
         if (this.empresas.length === 0) {
-          this.snackBar.open(`No se ha encontrado empresas con ${isRuc ? 'RUC' : 'Nombre'}: ${term}`, 'Cerrar', { duration: 3000 });
+          this.openSnackbar(`No se ha encontrado empresas con ${isRuc ? 'RUC' : 'Nombre'}: ${term}`, 'warning');
         }
       },
       error: () => {
-        this.snackBar.open('Error al buscar la empresa.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al buscar la empresa.', 'error');
         this.loading = false;
       }
     });
@@ -114,5 +113,17 @@ export class EnterpriceComponent implements OnInit {
   clearSearch(): void {
     this.searchTerm = '';
     this.listarEmpresas();
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

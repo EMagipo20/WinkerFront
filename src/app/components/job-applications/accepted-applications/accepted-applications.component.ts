@@ -39,7 +39,7 @@ export class AcceptedApplicationsComponent implements OnInit {
           this.ofertas = ofertas;
           this.cargarPostulantes();
         },
-        error: () => this.snackBar.open('Error al cargar ofertas.', 'Cerrar', { duration: 3000 })
+        error: () => this.openSnackbar('Error al cargar ofertas.', 'error')
       });
     }
   
@@ -49,7 +49,7 @@ export class AcceptedApplicationsComponent implements OnInit {
           this.postulantes = postulantes;
           this.cargarSolicitudesAceptadas();
         },
-        error: () => this.snackBar.open('Error al cargar postulantes.', 'Cerrar', { duration: 3000 })
+        error: () => this.openSnackbar('Error al cargar postulantes.', 'error')
       });
     }
   
@@ -63,7 +63,7 @@ export class AcceptedApplicationsComponent implements OnInit {
           }));
         },
         error: () => {
-          this.snackBar.open('Error al cargar las solicitudes aceptadas.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al cargar las solicitudes aceptadas.', 'error');
         }
       });
     }
@@ -88,7 +88,7 @@ export class AcceptedApplicationsComponent implements OnInit {
               nombreCompleto: this.postulantes.find(p => p.id === solicitud.postulanteId)?.nombreCompleto || 'No asignado'
             }));
           },
-          error: () => this.snackBar.open('Error al buscar postulante.', 'Cerrar', { duration: 3000 })
+          error: () => this.openSnackbar('Error al buscar postulante.', 'error')
         });
       }
     }
@@ -106,7 +106,19 @@ export class AcceptedApplicationsComponent implements OnInit {
           data: postulante
         });
       } else {
-        this.snackBar.open('No se encontró el postulante.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('No se encontró el postulante.', 'warning');
       }
+    }
+
+    private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+      this.snackBar.open(message, '', {
+        duration: 3000,
+        panelClass: 
+          type === 'success' ? 'success-snackbar' : 
+          type === 'error' ? 'error-snackbar' : 
+          'warning-snackbar',
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+      });
     }
 }

@@ -59,7 +59,7 @@ export class ListdeleteoffersComponent implements OnInit {
         this.empresas = empresas;
         this.obtenerEmpresaId();
       },
-      error: () => this.snackBar.open('Error al cargar empresas.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar empresas.', 'error')
     });
   }
 
@@ -69,7 +69,7 @@ export class ListdeleteoffersComponent implements OnInit {
         this.tipos = tiposT;
         this.obtenerEmpresaId();
       },
-      error: () => this.snackBar.open('Error al cargar tipos de trabajo.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar tipos de trabajo.', 'error')
     });
   }
 
@@ -79,13 +79,13 @@ export class ListdeleteoffersComponent implements OnInit {
         this.ubicaciones = ubi;
         this.obtenerEmpresaId();
       },
-      error: () => this.snackBar.open('Error al cargar ubicaciones de oferta.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar ubicaciones de oferta.', 'error')
     });
   }
 
   obtenerEmpresaId(): void {
     if (!this.username) {
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
     this.usuarioService.listarTodos().subscribe(usuarios => {
@@ -98,11 +98,11 @@ export class ListdeleteoffersComponent implements OnInit {
             this.contarOfertasPorEmpresa();
             this.cargarOfertas();
           } else {
-            this.snackBar.open('Empresa no encontrada', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Empresa no encontrada', 'warning');
           }
         });
       } else {
-        this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado', 'warning');
       }
     });
   }
@@ -117,7 +117,7 @@ export class ListdeleteoffersComponent implements OnInit {
         },
         error: () => {
           this.loading = false;
-          this.snackBar.open('Error al cargar ofertas activas.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al cargar ofertas activas.', 'error');
         }
       });
     } else {
@@ -128,7 +128,7 @@ export class ListdeleteoffersComponent implements OnInit {
         },
         error: () => {
           this.loading = false;
-          this.snackBar.open('Error al cargar las ofertas de empleo.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al cargar las ofertas de empleo.', 'error');
         }
       });
     }
@@ -157,7 +157,7 @@ export class ListdeleteoffersComponent implements OnInit {
         this.ofertaService.eliminarOferta(id).subscribe({
           next: () => {
             this.cargarOfertas();
-            this.snackBar.open('Oferta eliminada correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Oferta eliminada correctamente', 'success');
             this.loading = false;
           }
         });
@@ -169,11 +169,23 @@ export class ListdeleteoffersComponent implements OnInit {
     this.ofertaService.contarPorEmpresaId(this.empresaId).subscribe({
       next: (total) => {
         this.totalOfertas = total;
-        this.snackBar.open(`Total de ofertas: ${total}`, 'Cerrar', { duration: 3000 });
+        this.openSnackbar(`Total de ofertas: ${total}`, 'success');
       },
       error: () => {
-        this.snackBar.open('Error al contar las ofertas.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al contar las ofertas.', 'error');
       }
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

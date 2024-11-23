@@ -48,7 +48,7 @@ export class ListdeletedocumentsComponent implements OnInit {
 
   obtenerPostulanteId(): void {
     if (!this.username) {
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
     this.usuarioService.listarTodos().subscribe(usuarios => {
@@ -61,10 +61,10 @@ export class ListdeletedocumentsComponent implements OnInit {
           this.postulanteId = postulanteLogueado.id;
           this.cargarDocumentos(this.postulanteId);
         } else {
-          this.snackBar.open('Postulante no encontrado', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Postulante no encontrado', 'warning');
         }
       } else {
-        this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado', 'warning');
       }
     });
   }
@@ -83,7 +83,7 @@ export class ListdeletedocumentsComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.snackBar.open('Error al cargar documentos.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar documentos.', 'error');
       }
     });
   }
@@ -97,12 +97,12 @@ export class ListdeletedocumentsComponent implements OnInit {
         this.documentoService.eliminarDocumento(id).subscribe({
           next: () => {
             this.cargarDocumentos(this.postulanteId); 
-            this.snackBar.open('Documento eliminado correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Documento eliminado correctamente', 'success');
             this.loading = false;
           },
           error: () => {
             this.loading = false;
-            this.snackBar.open('Error al eliminar el documento', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Error al eliminar el documento', 'error');
           }
         });
       }
@@ -121,13 +121,13 @@ export class ListdeletedocumentsComponent implements OnInit {
             }))
             .sort((a, b) => a.id - b.id); 
           if (this.documentos.length === 0) {
-            this.snackBar.open('No hay documentos disponibles para el mes y año seleccionados.', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('No hay documentos disponibles para el mes y año seleccionados.', 'warning');
           }
           this.loading = false;
         },
         error: () => {
           this.loading = false;
-          this.snackBar.open('Error al cargar documentos por mes y año.', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Error al cargar documentos por mes y año.', 'error');
         }
       });
     }
@@ -147,5 +147,17 @@ export class ListdeletedocumentsComponent implements OnInit {
   
     // Libera la URL del Blob después de abrirla
     URL.revokeObjectURL(blobUrl);
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

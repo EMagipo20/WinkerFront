@@ -69,22 +69,18 @@ export class SettingsComponent implements OnInit {
             enabled: usuarioLogueado.enabled
           });
         } else {
-          this.snackBarMessage = 'Usuario no encontrado.';
-          this.snackBar.open(this.snackBarMessage, 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Usuario no encontrado', 'warning')
         }
       },
       error: () => {
-        this.snackBarMessage = 'Error al cargar los datos del usuario.';
-        this.snackBar.open(this.snackBarMessage, 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar los datos del usuario', 'error')
       }
     });
   }
 
   actualizarUsuario(): void {
     if (this.usuarioForm.invalid) {
-      this.snackBarMessage = 'Por favor, complete todos los campos correctamente.';
-      this.snackBar.open(this.snackBarMessage, 'Cerrar', { duration: 3000 });
-      return;
+      this.openSnackbar('Por favor complete todos los campos', 'warning')
     }
     this.loading = true;
     const usuarioActualizado: Usuario = {
@@ -99,8 +95,7 @@ export class SettingsComponent implements OnInit {
         this.loading = false;
       },
       error: () => {
-        this.snackBarMessage = 'Usuario actualizado exitosamente.';
-        this.snackBar.open(this.snackBarMessage, 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario actualizado exitosamente', 'success')
         this.loading = false;
       }
     });
@@ -125,13 +120,25 @@ export class SettingsComponent implements OnInit {
 
     this.usuarioService.eliminar(id).subscribe({
       next: () => {
-        this.snackBar.open('Cuenta eliminada correctamente.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Cuenta eliminada correctamente.', 'success');
         this.loading = false;
       },
       error: () => {
-        this.snackBar.open('Error al eliminar la cuenta.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al eliminar la cuent.', 'error');
         this.loading = false;
       }
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

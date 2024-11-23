@@ -26,7 +26,6 @@ export class PostsRespondidosComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.username = this.authService.getUsername();
-    console.log('Username obtenido del AuthService:', this.username);
   }
 
   ngOnInit(): void {
@@ -36,68 +35,67 @@ export class PostsRespondidosComponent implements OnInit {
   cargarPostulantes(): void {
     this.postulanteService.listarPostulantes().subscribe({
       next: (postulantes) => {
-        console.log('Postulantes obtenidos:', postulantes);
         this.obtenerPostulanteId(postulantes);
       },
       error: (err) => {
-        console.error('Error al cargar postulantes:', err);
-        this.snackBar.open('Error al cargar postulantes.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar postulantes.', 'error');
       }
     });
   }
 
   obtenerPostulanteId(postulantes: any[]): void {
     if (!this.username) {
-      console.warn('No se obtuvo un username válido.');
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
 
     this.usuarioService.listarTodos().subscribe({
       next: (usuarios) => {
-        console.log('Usuarios obtenidos:', usuarios);
         const usuarioLogueado = usuarios.find(u => u.username === this.username);
-        console.log('Usuario logueado encontrado:', usuarioLogueado);
 
         if (usuarioLogueado) {
           const postulanteLogueado = postulantes.find(p => p.usuarioId === usuarioLogueado.id);
-          console.log('Postulante logueado encontrado:', postulanteLogueado);
 
           if (postulanteLogueado) {
             this.postulanteId = postulanteLogueado.id;
             console.log('Postulante ID:', this.postulanteId);
             this.cargarPostsRespondidos(this.postulanteId);
           } else {
-            console.warn('Postulante asociado al usuario no encontrado.');
-            this.snackBar.open('Postulante no encontrado', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Postulante no encontrado', 'warning');
           }
         } else {
-          console.warn('Usuario no encontrado.');
-          this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+          this.openSnackbar('Usuario no encontrado', 'warning');
         }
       },
       error: (err) => {
-        console.error('Error al cargar usuarios:', err);
-        this.snackBar.open('Error al cargar usuarios.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar usuarios.', 'error');
       }
     });
   }
 
   cargarPostsRespondidos(postulanteId: number): void {
     this.loading = true;
-    console.log('Cargando posts respondidos para el postulante ID:', postulanteId);
-
     this.postService.listarRespondidosPorPostulanteId(postulanteId).subscribe({
       next: (posts) => {
-        console.log('Posts respondidos obtenidos:', posts);
         this.posts = posts;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error al cargar posts respondidos:', err);
         this.loading = false;
-        this.snackBar.open('Error al cargar los posts respondidos.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar los posts respondidos.', 'error');
       }
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

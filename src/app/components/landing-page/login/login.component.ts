@@ -48,18 +48,15 @@ export class LoginComponent implements OnInit {
           } else if (role === 'EMPRESA') {
             this.router.navigate(['sidenav-empresa/dashboard2']);
           } else {
-            this.snackBar.open('Login successful!', 'Cerrar', {
-              duration: 2000,
-              panelClass: ['success-snackbar']
-            });
+            this.openSnackbar('Inicio de sesión exitoso.', 'success');
           }
         },
         (error) => {
-          this.displayMessage('Credenciales incorrectas, intente de nuevo.', 'Error');
+          this.openSnackbar('Credenciales incorrectas, intente de nuevo.', 'error');
         }
       );
     } else {
-      this.displayMessage('Por favor, complete el formulario correctamente.', 'Error');
+      this.openSnackbar('Por favor, complete el formulario correctamente.', 'warning');
     }
   }
 
@@ -67,7 +64,15 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
   
-  displayMessage(message: string, action: string) {
-    this.snackBar.open(message, action, { duration: 2000 });
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

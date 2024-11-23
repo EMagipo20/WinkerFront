@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
         this.usuarioIdLogueado = usuarioLogueado.id;
         this.cargarDatosPostulante();
       } else {
-        this.snackBar.open('Usuario no encontrado.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado.', 'error');
       }
     });
   }
@@ -95,13 +95,13 @@ export class DashboardComponent implements OnInit {
     if (file) {
       const maxSize = 2 * 1024 * 1024;
       if (file.size > maxSize) {
-        this.snackBar.open('El tamaño de la foto excede el límite máximo permitido de 2MB.', 'Cerrar', { duration: 5000 });
+        this.openSnackbar('El tamaño de la foto excede el límite máximo permitido de 2MB.', 'warning');
         return;
       }
 
       const validFormats = ['image/png', 'image/jpeg'];
       if (!validFormats.includes(file.type)) {
-        this.snackBar.open('Formato de foto inválido. Solo se aceptan PNG y JPG.', 'Cerrar', { duration: 5000 });
+        this.openSnackbar('Formato de foto inválido. Solo se aceptan PNG y JPG.', 'error');
         return;
       }
   
@@ -126,7 +126,7 @@ export class DashboardComponent implements OnInit {
 
   crearPostulante(): void {
     if (this.postulanteForm.invalid || !this.fotoPreview) {
-      this.snackBar.open('Por favor complete todos los campos.', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('Por favor complete todos los campos.', 'warning');
       return;
     }
 
@@ -138,8 +138,8 @@ export class DashboardComponent implements OnInit {
       postulante.usuarioId = this.usuarioIdLogueado;
 
       this.postulanteService.registrar(postulante).subscribe({
-        next: () => this.manejarRespuestaRegistro('Postulante registrado exitosamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al registrar al postulante.', true)
+        next: () => this.manejarRespuestaRegistro('Postulante registrado exitosamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al registrar al postulante.', 'error'),
       });
     }, 3000);
   }
@@ -155,8 +155,8 @@ export class DashboardComponent implements OnInit {
       postulanteActualizado.id = this.postulante.id;
 
       this.postulanteService.actualizar(postulanteActualizado).subscribe({
-        next: () => this.manejarRespuestaRegistro('Perfil actualizado exitosamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al actualizar el perfil.', true)
+        next: () => this.manejarRespuestaRegistro('Perfil actualizado exitosamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al actualizar el perfil.', 'error'),
       });
     }, 3000);
   } 
@@ -170,11 +170,23 @@ export class DashboardComponent implements OnInit {
     postulante.fotoBase64 = this.postulanteForm.value.fotoBase64
   }
 
-  manejarRespuestaRegistro(mensaje: string, isError: boolean = false): void {
-    this.snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
-    if (!isError) {
+  manejarRespuestaRegistro(mensaje: string, type: 'success' | 'error'): void {
+    this.openSnackbar(mensaje, type);
+    if (type === 'success') {
       this.isEditing = false;
     }
     this.loading = false;
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

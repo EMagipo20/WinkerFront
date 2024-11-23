@@ -49,7 +49,7 @@ export class Dashboard2Component implements OnInit{
       ruc: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
       telefono: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       logotipoBase64: ['', Validators.required],
-      usuarioNombre: [{ value: this.username, disabled: true }]  // Mostrar el username logueado
+      usuarioNombre: [{ value: this.username, disabled: true }]
     });
   }
 
@@ -67,7 +67,7 @@ export class Dashboard2Component implements OnInit{
         this.usuarioIdLogueado = usuarioLogueado.id;
         this.cargarDatosEmpresa();
       } else {
-        this.snackBar.open('Usuario no encontrado.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado.', 'error');
       }
     });
   }
@@ -96,12 +96,12 @@ export class Dashboard2Component implements OnInit{
     if (file) {
       const maxSize = 2 * 1024 * 1024; 
       if (file.size > maxSize) {
-        this.snackBar.open('El tamaño del logotipo excede el límite máximo permitido de 2MB.', 'Cerrar', { duration: 5000 });
+        this.openSnackbar('El tamaño del logotipo excede el límite máximo permitido de 2MB.', 'warning');
         return;
       }
       const validFormats = ['image/png', 'image/jpeg'];
       if (!validFormats.includes(file.type)) {
-        this.snackBar.open('Formato de logotipo inválido. Solo se aceptan PNG y JPG.', 'Cerrar', { duration: 5000 });
+        this.openSnackbar('Formato de logotipo inválido. Solo se aceptan PNG y JPG.', 'error');
         return;
       }
       const reader = new FileReader();
@@ -125,7 +125,7 @@ export class Dashboard2Component implements OnInit{
 
   registrarEmpresa(): void {
     if (this.empresaForm.invalid || !this.fotoPreview) {
-      this.snackBar.open('Por favor complete todos los campos.', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('Por favor complete todos los campos.', 'warning');
       return;
     }
   
@@ -137,8 +137,8 @@ export class Dashboard2Component implements OnInit{
       empresa.usuarioId = this.usuarioIdLogueado;
   
       this.empresaService.agregarEmpresa(empresa).subscribe({
-        next: () => this.manejarRespuestaRegistro('Empresa registrada exitosamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al registrar la empresa.', true)
+        next: () => this.manejarRespuestaRegistro('Empresa registradoa exitosamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al registrar empresa.', 'error'),
       });
     }, 3000);
   }
@@ -154,8 +154,8 @@ export class Dashboard2Component implements OnInit{
       empresaActualizada.id = this.empresa.id;
   
       this.empresaService.actualizarEmpresa(empresaActualizada).subscribe({
-        next: () => this.manejarRespuestaRegistro('Perfil actualizado exitosamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al actualizar el perfil.', true)
+        next: () => this.manejarRespuestaRegistro('Perfil actualizado exitosamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al actualizar el perfil.', 'error'),
       });
     }, 3000);
   }  
@@ -168,11 +168,23 @@ export class Dashboard2Component implements OnInit{
     empresa.rubroId = this.rubros.find(r => r.nombreRubro === this.empresaForm.value.rubroNombre)?.id || 0;
   }
 
-  manejarRespuestaRegistro(mensaje: string, isError: boolean = false): void {
-    this.snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
-    if (!isError) {
+  manejarRespuestaRegistro(mensaje: string, type: 'success' | 'error'): void {
+    this.openSnackbar(mensaje, type);
+    if (type === 'success') {
       this.isEditing = false;
     }
     this.loading = false;
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

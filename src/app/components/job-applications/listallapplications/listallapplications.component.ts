@@ -45,7 +45,7 @@ export class ListallapplicationsComponent implements OnInit {
         this.solicitudCount = count;
       },
       error: () => {
-        this.snackBar.open('Error al contar las solicitudes por postulante.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al contar las solicitudes por postulante.', 'error');
       }
     });
   }
@@ -56,7 +56,7 @@ export class ListallapplicationsComponent implements OnInit {
         this.ofertas = ofertas;
         this.obtenerPostulanteId();
       },
-      error: () => this.snackBar.open('Error al cargar ofertas.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar ofertas.', 'error')
     });
   }
 
@@ -66,13 +66,13 @@ export class ListallapplicationsComponent implements OnInit {
         this.postulantes = postulantes;
         this.obtenerPostulanteId();
       },
-      error: () => this.snackBar.open('Error al cargar postulantes.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar postulantes.', 'error')
     });
   }
 
   obtenerPostulanteId(): void {
     if (!this.username) {
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
     this.usuarioService.listarTodos().subscribe(usuarios => {
@@ -87,7 +87,7 @@ export class ListallapplicationsComponent implements OnInit {
           this.contarSolicitudesPorPostulante(this.postulanteId);
         }
       } else {
-        this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado', 'warning');
       }
     });
   }
@@ -105,7 +105,7 @@ export class ListallapplicationsComponent implements OnInit {
       },
       error: () => {
         this.loading = false;
-        this.snackBar.open('Error al cargar las solicitudes.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar las solicitudes.', 'error');
       }
     });
   }
@@ -119,15 +119,27 @@ export class ListallapplicationsComponent implements OnInit {
         this.solicitudService.eliminarSolicitud(id).subscribe({
           next: () => {
             this.cargarSolicitudes(this.postulanteId); 
-            this.snackBar.open('Soliitud eliminada correctamente', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Soliitud eliminada correctamente', 'success');
             this.loading = false;
           },
           error: () => {
             this.loading = false;
-            this.snackBar.open('Error al eliminar solicitud', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Error al eliminar solicitud', 'error');
           }
         });
       }
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }

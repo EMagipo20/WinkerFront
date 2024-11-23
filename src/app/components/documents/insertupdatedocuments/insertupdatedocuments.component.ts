@@ -90,14 +90,14 @@ export class InsertupdatedocumentsComponent implements OnInit {
   
       // Validar el tamaño del archivo
       if (file.size > maxSize) {
-        this.snackBar.open('El tamaño del archivo excede el límite máximo permitido de 5MB.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('El tamaño del archivo excede el límite máximo permitido de 5MB.', 'warning');
         this.fileName = '';
         this.documentoForm.patchValue({ [controlName]: '' });
         return;
       }
   
       if (!allowedFormats.includes(file.type)) {
-        this.snackBar.open('Formato de archivo inválido. Solo se aceptan PDF.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Formato de archivo inválido. Solo se aceptan PDF.', 'error');
         this.fileName = ''; 
         this.documentoForm.patchValue({ [controlName]: '' }); 
         return;
@@ -116,7 +116,7 @@ export class InsertupdatedocumentsComponent implements OnInit {
   
   registrarDocumento(): void {
     if (this.documentoForm.invalid) {
-      this.snackBar.open('Por favor, complete todos los campos requeridos.', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('Por favor, complete todos los campos requeridos.', 'warning');
       return;
     }
 
@@ -126,13 +126,13 @@ export class InsertupdatedocumentsComponent implements OnInit {
     this.asignarValoresDocumento(documento);
     if (this.isEditing) {
       this.documentoService.actualizarDocumento(documento).subscribe({
-        next: () => this.manejarRespuestaRegistro('Documento actualizado correctamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al actualizar el documento.', true)
+        next: () => this.manejarRespuestaRegistro('Documento actualizado correctamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al actualizar el documento.', 'error')
       });
     } else {
       this.documentoService.agregarDocumento(documento).subscribe({
-        next: () => this.manejarRespuestaRegistro('Documento agregado correctamente.'),
-        error: () => this.manejarRespuestaRegistro('Error al agregar el documento.', true)
+        next: () => this.manejarRespuestaRegistro('Documento agregado correctamente.', 'success'),
+        error: () => this.manejarRespuestaRegistro('Error al agregar el documento.', 'error')
       });
     }
   }
@@ -146,12 +146,24 @@ export class InsertupdatedocumentsComponent implements OnInit {
     documento.archivoBase64 = this.documentoForm.value.archivoBase64;
     documento.postulanteId = this.documentoForm.value.postulanteId; 
   }
-
-  manejarRespuestaRegistro(mensaje: string, isError: boolean = false): void {
-    this.snackBar.open(mensaje, 'Cerrar', { duration: 3000 });
-    if (!isError) {
+  
+  manejarRespuestaRegistro(mensaje: string, type: 'success' | 'error'): void {
+    this.openSnackbar(mensaje, type);
+    if (type === 'success') {
       this.router.navigate(['/sidenav-postulante/documents/listdeletedocuments']);
     }
     this.loading = false;
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
   }
 }

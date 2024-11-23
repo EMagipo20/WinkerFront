@@ -47,7 +47,7 @@ export class ResponderPostComponent implements OnInit {
         this.ofertas = ofertas;
         this.obtenerEmpresaId();
       },
-      error: () => this.snackBar.open('Error al cargar ofertas.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar ofertas.', 'error')
     });
   }
 
@@ -56,13 +56,13 @@ export class ResponderPostComponent implements OnInit {
       next: (postulantes) => {
         this.postulantes = postulantes;
       },
-      error: () => this.snackBar.open('Error al cargar postulantes.', 'Cerrar', { duration: 3000 })
+      error: () => this.openSnackbar('Error al cargar postulantes.', 'error')
     });
   }
 
   obtenerEmpresaId(): void {
     if (!this.username) {
-      this.snackBar.open('No hay usuario logeado', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('No hay usuario logeado', 'warning');
       return;
     }
     this.usuarioService.listarTodos().subscribe(usuarios => {
@@ -74,11 +74,11 @@ export class ResponderPostComponent implements OnInit {
             this.empresaId = empresa.id;
             this.cargarPosts();
           } else {
-            this.snackBar.open('Empresa no encontrada', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Empresa no encontrada', 'warning');
           }
         });
       } else {
-        this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Usuario no encontrado', 'warning');
       }
     });
   }
@@ -100,13 +100,13 @@ export class ResponderPostComponent implements OnInit {
             this.loading = false;
           },
           error: () => {
-            this.snackBar.open('Error al cargar los posts.', 'Cerrar', { duration: 3000 });
+            this.openSnackbar('Error al cargar los posts.', 'error');
             this.loading = false;
           }
         });
       },
       error: () => {
-        this.snackBar.open('Error al cargar las ofertas.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al cargar las ofertas.', 'error');
         this.loading = false;
       }
     });
@@ -114,7 +114,7 @@ export class ResponderPostComponent implements OnInit {
 
   responderPost(post: Post): void {
     if (!post.disponible) {
-      this.snackBar.open('Este post ya ha sido respondido.', 'Cerrar', { duration: 3000 });
+      this.openSnackbar('Este post ya ha sido respondido.', 'warning');
       return;
     }
 
@@ -122,14 +122,26 @@ export class ResponderPostComponent implements OnInit {
     post.disponible = false;
     this.postService.actualizarPost(post).subscribe({
       next: () => {
-        this.snackBar.open('Respuesta enviada exitosamente.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Respuesta enviada exitosamente.', 'success');
         this.postsRecibidos = this.postsRecibidos.filter((p) => p.id !== post.id); 
         this.loading = false;
       },
       error: () => {
-        this.snackBar.open('Error al enviar la respuesta.', 'Cerrar', { duration: 3000 });
+        this.openSnackbar('Error al enviar la respuesta.', 'error');
         this.loading = false;
       },
+    });
+  }
+
+  private openSnackbar(message: string, type: 'success' | 'error' | 'warning'): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: 
+        type === 'success' ? 'success-snackbar' : 
+        type === 'error' ? 'error-snackbar' : 
+        'warning-snackbar',
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
     });
   }
 }
