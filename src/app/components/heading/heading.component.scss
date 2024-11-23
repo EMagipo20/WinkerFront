@@ -289,3 +289,13 @@
     opacity: 0;
   }
 }
+
+.paginator-container {
+  display: flex;
+  justify-content: center; 
+  padding-top: 10px;
+}
+
+mat-paginator {
+  background-color: rgba(255, 255, 255, 0.959);
+}

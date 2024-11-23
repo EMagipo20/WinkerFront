@@ -51,10 +51,12 @@ export class ListOffersPostulanteComponent implements OnInit{
   tituloOferta: string = '';
 
   mejoresSalarios: boolean = false;
+
+  soloActivas: boolean = false;
   
   // Definir las columnas a mostrar
   displayedColumns: string[] = [
-    'id', 'tituloTrabajo', 'descripcion', 'salario', 'fechaPublicacion', 'fechaVencimiento', 'indActivo', 
+    'id', 'tituloTrabajo', 'salario', 'fechaVencimiento', 'indActivo', 
     'empresa', 'tipoTrabajo', 'ubicacion', 'acciones'
   ];
 
@@ -115,24 +117,48 @@ export class ListOffersPostulanteComponent implements OnInit{
 
   cargarOfertas(): void {
     this.loading = true;
-    this.ofertaservice.listarOfertas().subscribe({
-      next: (ofertas) => {
-        this.ofertas = ofertas
-          .map(oferta => ({
-            ...oferta,
-            nombreEmpresa: this.empresas.find(e => e.id === oferta.empresaId)?.nombre || 'No asignada',
-            nombreTipoTrabajo: this.tipos.find(t => t.id === oferta.tipoTrabajoId)?.tipo || 'No asignado',
-            nombreUbi: this.ubicaciones.find(u => u.id === oferta.ubicacionOfertaId)?.departamento || 'No asignada'
-          }))
-          .sort((a, b) => a.id - b.id);
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-        this.snackBar.open('Error al cargar las ofertas de empleo.', 'Cerrar', { duration: 3000 });
-      }
-    });
+    if (this.soloActivas) {
+      this.ofertaservice.OfertasActivas().subscribe({
+        next: (ofertas) => {
+          this.procesarOfertas(ofertas);
+        },
+        error: () => {
+          this.mostrarErrorCargarOfertas();
+        }
+      });
+    } else {
+      this.ofertaservice.listarOfertas().subscribe({
+        next: (ofertas) => {
+          this.procesarOfertas(ofertas);
+        },
+        error: () => {
+          this.mostrarErrorCargarOfertas();
+        }
+      });
+    }
   }
+  
+  private procesarOfertas(ofertas: OfertaEmpleo[]): void {
+    this.ofertas = ofertas
+      .map(oferta => ({
+        ...oferta,
+        nombreEmpresa: this.empresas.find(e => e.id === oferta.empresaId)?.nombre || 'No asignada',
+        nombreTipoTrabajo: this.tipos.find(t => t.id === oferta.tipoTrabajoId)?.tipo || 'No asignado',
+        nombreUbi: this.ubicaciones.find(u => u.id === oferta.ubicacionOfertaId)?.departamento || 'No asignada'
+      }))
+      .sort((a, b) => a.id - b.id);
+    this.loading = false;
+  }
+  
+  private mostrarErrorCargarOfertas(): void {
+    this.loading = false;
+    this.snackBar.open('Error al cargar las ofertas de empleo.', 'Cerrar', { duration: 3000 });
+  }
+  
+  toggleSoloActivas(): void {
+    this.soloActivas = !this.soloActivas;
+    this.cargarOfertas();
+  }  
 
   eliminarOferta(id: number): void {
     const dialogRef = this.dialog.open(DeleteComponent);

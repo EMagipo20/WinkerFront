@@ -94,6 +94,16 @@ export class Dashboard2Component implements OnInit{
   onFileChange(event: any, controlName: string): void {
     const file = event.target.files[0];
     if (file) {
+      const maxSize = 2 * 1024 * 1024; 
+      if (file.size > maxSize) {
+        this.snackBar.open('El tamaño del logotipo excede el límite máximo permitido de 2MB.', 'Cerrar', { duration: 5000 });
+        return;
+      }
+      const validFormats = ['image/png', 'image/jpeg'];
+      if (!validFormats.includes(file.type)) {
+        this.snackBar.open('Formato de logotipo inválido. Solo se aceptan PNG y JPG.', 'Cerrar', { duration: 5000 });
+        return;
+      }
       const reader = new FileReader();
       reader.onload = () => {
         if (controlName === 'logotipoBase64') {
@@ -103,7 +113,7 @@ export class Dashboard2Component implements OnInit{
       };
       reader.readAsDataURL(file);
     }
-  }
+  }  
 
   onSubmitEmpresa(): void {
     if (this.isEditing) {

@@ -1,36 +1,27 @@
-<div class="table-container">
-    <h2>Mis ofertas favoritas</h2>
-    <div class="favorites-header">
-        <p>Total de ofertas favoritas: {{ favoriteCount }}</p>
-    </div>
-    <div class="table-scroll">
-        <table mat-table [dataSource]="favoritas" class="mat-elevation-z8">
-            <ng-container matColumnDef="id"> 
-                <th mat-header-cell *matHeaderCellDef> ID</th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td> 
-            </ng-container>
-        
-            <ng-container matColumnDef="postulanteNombre">
-                <th mat-header-cell *matHeaderCellDef> Nombres del postulante </th>
-                <td mat-cell *matCellDef="let element"> {{element.postulanteNombre}} </td>
-            </ng-container>
-        
-            <ng-container matColumnDef="ofertaNombre">
-                <th mat-header-cell *matHeaderCellDef> Oferta de empleo </th>
-                <td mat-cell *matCellDef="let element"> {{element.ofertaNombre}} </td>
-            </ng-container>
-        
-            <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let element" class="action-buttons">
-                  <button mat-icon-button color="warn" (click)="eliminarFavorita(element.id)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-            </ng-container>              
-        
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+<div class="container">
+    <h2>Mis Ofertas Favoritas</h2>
+    <p class="total-count">Total de ofertas favoritas: {{ favoriteCount }}</p>
+  
+    <div class="card-container">
+      <div class="card" *ngFor="let fav of enrichedFavoritas">
+        <h3 class="card-title">Favorita N°: {{ fav.id }}</h3>
+        <ul class="details">
+          <li>
+            <span class="icon material-icons">work</span>
+            <strong>Oferta:</strong> &nbsp; {{ fav.ofertaNombre }}
+          </li>
+          <li>
+            <span class="icon material-icons">person</span>
+            <strong>Postulante:</strong> &nbsp; {{ fav.postulanteNombre }}
+          </li>
+        </ul>
+        <div class="actions">
+          <span class="icon material-icons favorite-icon filled">star</span>
+          <button (click)="eliminarFavorita(fav.id)" class="delete-button">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
     </div>
 </div>
+  

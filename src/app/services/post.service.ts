@@ -41,4 +41,8 @@ export class PostService {
   countPostsPorOfertaEmpleo(): Observable<Object[]> {
     return this.http.get<Object[]>(`${this.baseUrl}/count-por-oferta-empleo`);
   }
+
+  listarRespondidosPorPostulanteId(postulanteId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.baseUrl}/respondidos/${postulanteId}`);
+  }
 }

@@ -88,11 +88,23 @@ export class DashboardComponent implements OnInit {
         }
       },
     });
-  }  
+  }
 
   onFileChange(event: any, controlName: string): void {
     const file = event.target.files[0];
     if (file) {
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        this.snackBar.open('El tamaño de la foto excede el límite máximo permitido de 2MB.', 'Cerrar', { duration: 5000 });
+        return;
+      }
+
+      const validFormats = ['image/png', 'image/jpeg'];
+      if (!validFormats.includes(file.type)) {
+        this.snackBar.open('Formato de foto inválido. Solo se aceptan PNG y JPG.', 'Cerrar', { duration: 5000 });
+        return;
+      }
+  
       const reader = new FileReader();
       reader.onload = () => {
         if (controlName === 'fotoBase64') {
@@ -102,7 +114,7 @@ export class DashboardComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
-  }
+  }  
 
   onSubmitPostulante(): void {
     if (this.isEditing) {

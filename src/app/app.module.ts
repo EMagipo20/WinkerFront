@@ -41,6 +41,7 @@ import { LoginComponent } from './components/landing-page/login/login.component'
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ReportsComponent } from './components/general-reports/reports/reports.component';
 import { ReportLocationComponent } from './components/general-reports/report-location/report-location.component';
+import { PostsRespondidosComponent } from './components/posts-respondidos/posts-respondidos.component';
 export function tokenGetter() {
   return sessionStorage.getItem('token');
 }
@@ -92,6 +93,7 @@ const jwtModuleOptions: JwtModuleOptions = {
     LoginComponent,
     ReportsComponent,
     ReportLocationComponent,
+    PostsRespondidosComponent
   ],
   imports: [
     BrowserModule,

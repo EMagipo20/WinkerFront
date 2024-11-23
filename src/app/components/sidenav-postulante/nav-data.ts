@@ -59,6 +59,11 @@ export const navbarData: INavbarData[] = [
         ]
     },
     {
+        routeLink: 'posts-respondidos',
+        icon: 'fas fa-comments', 
+        label: 'Posts Respondidos'
+    },
+    {
         routeLink: 'settings',
         icon: 'fas fa-cog', // Icono para Configuración de cuenta
         label: 'Mi Cuenta',

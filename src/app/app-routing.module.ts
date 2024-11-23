@@ -33,6 +33,7 @@ import { LoginComponent } from './components/landing-page/login/login.component'
 import { GeneralReportsComponent } from './components/general-reports/general-reports.component';
 import { ReportsComponent } from './components/general-reports/reports/reports.component';
 import { ReportLocationComponent } from './components/general-reports/report-location/report-location.component';
+import { PostsRespondidosComponent } from './components/posts-respondidos/posts-respondidos.component';
 
 const routes: Routes = [
     { 
@@ -107,6 +108,8 @@ const routes: Routes = [
                 children: [
                     { path: 'listallapplications', component: ListallapplicationsComponent }
                 ], canActivate: [segGuard]},
+
+            { path: 'posts-respondidos', component: PostsRespondidosComponent, canActivate: [segGuard]},
 
             { path: 'settings', component: SettingsComponent, canActivate: [segGuard]}
         ]

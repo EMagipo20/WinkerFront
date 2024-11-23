@@ -42,7 +42,7 @@
             <!-- Mostrar ícono de PDF y el nombre del archivo -->
             <div *ngIf="documentoForm.get('archivoBase64')?.value" class="file-info-display">
               <img src="assets/icono-pdf.png" alt="PDF Icon" class="pdf-icon">
-              <div class="file-url-display">{{ fileName }}</div> 
+              <div class="file-url-display"><span>{{ fileName }}</span></div> 
             </div>
 
             <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Cargar Archivo PDF</button>

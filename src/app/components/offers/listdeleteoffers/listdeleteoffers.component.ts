@@ -31,8 +31,7 @@ export class ListdeleteoffersComponent implements OnInit {
   soloActivas: boolean = false;
 
   displayedColumns: string[] = [
-    'id', 'tituloTrabajo', 'descripcion', 'salario', 'fechaPublicacion', 'fechaVencimiento', 'indActivo', 
-    'empresa', 'tipoTrabajo', 'ubicacion', 'acciones'
+    'id', 'tituloTrabajo', 'salario', 'fechaPublicacion', 'fechaVencimiento', 'indActivo', 'tipoTrabajo', 'ubicacion', 'acciones'
   ];
 
   constructor(

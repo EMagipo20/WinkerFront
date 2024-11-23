@@ -85,8 +85,6 @@ export class ListallapplicationsComponent implements OnInit {
           this.postulanteId = postulanteLogueado.id;
           this.cargarSolicitudes(this.postulanteId);
           this.contarSolicitudesPorPostulante(this.postulanteId);
-        } else {
-          this.snackBar.open('Postulante no encontrado', 'Cerrar', { duration: 3000 });
         }
       } else {
         this.snackBar.open('Usuario no encontrado', 'Cerrar', { duration: 3000 });

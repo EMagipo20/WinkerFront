@@ -1,53 +1,111 @@
-.favorites-header {
-    text-align: left;
-    margin-bottom: 20px;
-    p {
-      font-size: 1rem;
-      color: #f8f8f8; 
-      margin: 5px 0 0;
-    }
-}
-
-.table-container {
-    width: 40%; 
-    margin: 0 auto; 
-    position: relative;
-
+.container {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  
     h2 {
-        text-align: center;
-        font-family: Roboto;
-        font-weight: 500;
-        margin-bottom: 23px;
-        margin-top: 17px;
-        font-size: 15px;
-        color: rgb(255, 255, 255);
+      text-align: center;
+      font-family: Roboto;
+      font-weight: 500;
+      margin-bottom: 23px;
+      margin-top: 15px;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+    }
+  
+    .total-count {
+      font-size: 1rem;
+      color: #cecece;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 280px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .action-buttons {
+    .card-title {
+      font-size: 1rem;
+      color: #d6074c;
+      font-family: Roboto;
+      margin-bottom: 15px;
+      text-align: center; 
+    }
+  
+    .details {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+  
+      li {
         display: flex;
-        justify-content: space-around;
         align-items: center;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        color: #555;
+  
+        .icon {
+          font-size: 20px;
+          color: #4caf50;
+          margin-right: 8px;
+        }
+  
+        strong {
+          font-weight: bold;
+          color: #333;
+        }
+      }
     }
-
-    table {
-        width: 450px; 
-        border-collapse: collapse;
-        border: 0.5px solid rgb(207, 207, 207);
+  
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px; 
+      margin-top: 10px;
+  
+      .favorite-icon {
+        font-size: 24px;
+        color: #ffeb3b; 
+        cursor: pointer;
+        transition: color 0.2s ease;
+  
+        &:hover {
+          color: #fbc02d; 
+        }
+      }
+  
+      .delete-button {
         background-color: transparent;
-
-        th {
-            padding: 8px; 
-            text-align: center;
-        } 
-        
-        td {
-            padding: 8px; 
-            text-align: center;
-            color: white; 
+        border: none;
+        cursor: pointer;
+  
+        .material-icons {
+          font-size: 24px;
+          color: #f44336; 
         }
-
-        th {
-            background-color: rgb(255, 255, 255);
+  
+        &:hover .material-icons {
+          color: #d32f2f; 
         }
+      }
     }
-}
+  }
+  

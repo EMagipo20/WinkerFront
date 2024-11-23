@@ -1,0 +1,42 @@
+<div class="container">
+    <!-- Mensaje de carga -->
+    <div *ngIf="loading" class="loading-message">
+      <p>Cargando posts respondidos...</p>
+    </div>
+  
+    <!-- Contenedor de las tarjetas -->
+    <div class="card-container" *ngIf="!loading && posts.length > 0">
+      <!-- Tarjeta de cada post -->
+      <div class="card" *ngFor="let post of posts">
+        <!-- Cabecera del post -->
+        <div class="header-container">
+          <div class="icon-circle">
+            <span class="material-icons">help_outline</span>
+          </div>
+          <h3 class="post-title">{{ post.pregunta }}</h3>
+        </div>
+  
+        <!-- Contenido del post -->
+        <div class="post-content">
+          <div class="response-card">
+            <div class="response-icon">
+              <span class="material-icons">question_answer</span>
+            </div>
+            <p><strong>Respuesta:</strong> {{ post.respuesta }}</p>
+          </div>
+          <div class="response-card">
+            <div class="response-icon">
+              <span class="material-icons">event</span>
+            </div>
+            <p><strong>Fecha de Publicación:</strong> {{ post.fechaPublicacion | date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensaje cuando no hay posts -->
+    <div *ngIf="!loading && posts.length === 0" class="no-posts-message">
+      <p>No se encontraron posts respondidos.</p>
+    </div>
+  </div>
+  

@@ -83,7 +83,26 @@ export class InsertupdatedocumentsComponent implements OnInit {
 
   onFileChange(event: any, controlName: string): void {
     const file = event.target.files[0];
+  
     if (file) {
+      const maxSize = 5 * 1024 * 1024;
+      const allowedFormats = ['application/pdf'];
+  
+      // Validar el tamaño del archivo
+      if (file.size > maxSize) {
+        this.snackBar.open('El tamaño del archivo excede el límite máximo permitido de 5MB.', 'Cerrar', { duration: 3000 });
+        this.fileName = '';
+        this.documentoForm.patchValue({ [controlName]: '' });
+        return;
+      }
+  
+      if (!allowedFormats.includes(file.type)) {
+        this.snackBar.open('Formato de archivo inválido. Solo se aceptan PDF.', 'Cerrar', { duration: 3000 });
+        this.fileName = ''; 
+        this.documentoForm.patchValue({ [controlName]: '' }); 
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = () => {
         this.documentoForm.patchValue({ 
@@ -93,7 +112,7 @@ export class InsertupdatedocumentsComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
-  }  
+  }    
   
   registrarDocumento(): void {
     if (this.documentoForm.invalid) {
